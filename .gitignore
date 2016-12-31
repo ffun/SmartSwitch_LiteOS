@@ -1,0 +1,10 @@
+/Output/*
+/Listing/*
+*DS_Store
+*.a
+*.o
+*.class
+*.lib
+*.so
+/SI3/*
+
