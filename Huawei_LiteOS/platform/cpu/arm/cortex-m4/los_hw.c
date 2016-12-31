@@ -96,7 +96,7 @@ VOID LOS_Schedule(VOID)
  *****************************************************************************/
 LITE_OS_SEC_TEXT_MINOR VOID osTaskExit(VOID)
 {
-    __asm ("cpsid i" : : : "memory");
+    __disable_irq();
     while(1);
 }
 
@@ -122,7 +122,7 @@ LITE_OS_SEC_TEXT_INIT VOID *osTskStackInit(UINT32 uwTaskID, UINT32 uwStackSize, 
     *((UINT32 *)(pTopStack)) = OS_TASK_MAGIC_WORD;
 
     pstContext    = (TSK_CONTEXT_S *)(((UINT32)pTopStack + uwStackSize) - sizeof(TSK_CONTEXT_S));
-#if 1
+#if 0
     pstContext->S16 = 0xAA000010;
     pstContext->S17 = 0xAA000011;
     pstContext->S18 = 0xAA000012;
@@ -157,7 +157,7 @@ LITE_OS_SEC_TEXT_INIT VOID *osTskStackInit(UINT32 uwTaskID, UINT32 uwStackSize, 
     pstContext->uwLR  = (UINT32)osTaskExit;
     pstContext->uwPC  = (UINT32)osTaskEntry;
     pstContext->uwxPSR = 0x01000000L;
-#if 1
+#if 0
     pstContext->S0 = 0xAA000000;
     pstContext->S1 = 0xAA000001;
     pstContext->S2 = 0xAA000002;

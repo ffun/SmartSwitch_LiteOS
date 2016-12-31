@@ -62,7 +62,7 @@ LITE_OS_SEC_VEC HWI_PROC_FUNC m_pstHwiForm[OS_M4_VECTOR_CNT] =
   osHwiDefaultHandler,  // [11] SVCall Handler
   osHwiDefaultHandler,  // [12] Debug Monitor Handler
   0,                    // [13] Reserved
-  osPendSV,             // [14] PendSV Handler
+  PendSV_Handler,             // [14] PendSV Handler
   osHwiDefaultHandler,  // [15] SysTick Handler
 };
 HWI_PROC_FUNC m_pstHwiSlaveForm[OS_M4_VECTOR_CNT] = {0};
@@ -74,12 +74,10 @@ HWI_PROC_FUNC m_pstHwiSlaveForm[OS_M4_VECTOR_CNT] = {0};
  Output      : None
  Return      : Interrupt Indexes number
  *****************************************************************************/
-LITE_OS_SEC_TEXT_MINOR UINT32 osIntNumGet(VOID)
+LITE_OS_SEC_TEXT_MINOR __asm UINT32 osIntNumGet(VOID)
 {
-   UINT32 uwIntNum;
-
-  __asm ("mrs %0, ipsr" : "=r" (uwIntNum));
-  return uwIntNum;
+   MRS R0,IPSR
+	 BX LR
 }
 
 /*****************************************************************************

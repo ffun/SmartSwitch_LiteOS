@@ -707,7 +707,7 @@ extern VOID osTaskMonInit(VOID);
  */
 extern UINT32 osCpupInit(VOID);
 
-extern void osBackTrace();
+extern void osBackTrace(void);
 
 #ifdef __cplusplus
 #if __cplusplus

@@ -70,7 +70,7 @@ extern UINT64 g_ullTickCount;
 * @see None.
 * @since Huawei LiteOS V100R001C00
 */
-extern VOID osTickHandler(VOID);
+extern VOID SysTick_Handler(VOID);
 
 
 #ifdef __cplusplus

@@ -240,7 +240,7 @@ extern UINT32  g_vuwIntCount;
  * @ingroup los_hwi
  * Boot interrupt vector table.
  */
-extern UINT32 _BootVectors[];
+extern UINT32 __Vectors[];
 
 /**
  * @ingroup los_hwi
@@ -579,7 +579,7 @@ extern VOID  osHwiDefaultHandler(VOID);
  * @see None.
  * @since Huawei LiteOS V100R001C00
  */
-extern VOID  osPendSV(VOID);
+extern VOID  PendSV_Handler(VOID);
 
  /**
  *@ingroup los_hwi

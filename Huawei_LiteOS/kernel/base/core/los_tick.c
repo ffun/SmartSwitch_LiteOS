@@ -57,7 +57,7 @@ LITE_OS_SEC_BSS UINT32      g_uwCyclePerSec;
  Return      : None
  *****************************************************************************/
 extern void hal_clock_irqclear(void);
-LITE_OS_SEC_TEXT VOID osTickHandler(VOID)
+LITE_OS_SEC_TEXT VOID SysTick_Handler(VOID)
 {
     #if (LOSCFG_BASE_CORE_TICK_HW_TIME == YES)
     hal_clock_irqclear();//diff from every platform

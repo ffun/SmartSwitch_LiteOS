@@ -65,7 +65,7 @@ LITE_OS_SEC_TEXT_INIT UINT32 osTickStart(VOID)
     }
 
     m_pstHwiForm[OS_EXC_SYS_TICK] = (HWI_PROC_FUNC)osInterrupt;
-    m_pstHwiSlaveForm[OS_EXC_SYS_TICK] = osTickHandler;
+    m_pstHwiSlaveForm[OS_EXC_SYS_TICK] = SysTick_Handler;
 
     g_uwCyclesPerTick = OS_SYS_CLOCK / LOSCFG_BASE_CORE_TICK_PER_SECOND;
     g_ullTickCount = 0;
