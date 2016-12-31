@@ -54,7 +54,7 @@ extern "C" {
  * @ingroup los_config
  * System clock (unit: HZ)
  */
-#define OS_SYS_CLOCK                                    16000000
+#define OS_SYS_CLOCK                                    72000000
 
 /**
 * @ingroup los_config
