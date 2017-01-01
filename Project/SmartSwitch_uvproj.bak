@@ -582,6 +582,11 @@
               <FileType>1</FileType>
               <FilePath>..\Driver\src\relay.c</FilePath>
             </File>
+            <File>
+              <FileName>uartConfig.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Driver\src\uartConfig.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

@@ -364,7 +364,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_HD,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\User;..\Libraries\CMSIS;..\Libraries\FWLib\inc;..\Huawei_LiteOS\kernel\base\include;..\Huawei_LiteOS\kernel\include;..\Huawei_LiteOS\platform\bsp\sample\config;..\Huawei_LiteOS\platform\cpu\arm\cortex-m4;..\Driver\inc</IncludePath>
+              <IncludePath>..\User;..\Libraries\CMSIS;..\Libraries\FWLib\inc;..\Huawei_LiteOS\kernel\base\include;..\Huawei_LiteOS\kernel\include;..\Huawei_LiteOS\platform\bsp\sample\config;..\Huawei_LiteOS\platform\cpu\arm\cortex-m4;..\Driver\inc;..\util</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -587,6 +587,11 @@
               <FileType>1</FileType>
               <FilePath>..\Driver\src\uartConfig.c</FilePath>
             </File>
+            <File>
+              <FileName>timerDriver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Driver\src\timerDriver.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -696,6 +701,31 @@
               <FileName>los_dispatch.s</FileName>
               <FileType>2</FileType>
               <FilePath>..\Huawei_LiteOS\platform\cpu\arm\cortex-m4\los_dispatch.s</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>util</GroupName>
+          <Files>
+            <File>
+              <FileName>list_fang.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\util\list_fang.c</FilePath>
+            </File>
+            <File>
+              <FileName>queue_fang.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\util\queue_fang.c</FilePath>
+            </File>
+            <File>
+              <FileName>util.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\util\util.c</FilePath>
+            </File>
+            <File>
+              <FileName>timeControl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\util\timeControl.c</FilePath>
             </File>
           </Files>
         </Group>
