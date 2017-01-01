@@ -37,11 +37,49 @@
 //stm32 head files
 #include "stm32f10x.h"
 
-//global variable
-UINT32 g_TestTskHandle;
+//user files
+#include "platform.h"
+#include "toollib.h"
+#include "device.h"
 
 //hardware init
 void hardware_init(void){
+    env_init();
+}
+UINT32 create_task1();
+UINT32 create_task2();
+
+UINT32 create_task(CHAR*taskName,UINT32*taskHandle,UINT16 taskPrio,TSK_ENTRY_FUNC pFun);
+
+//user entry function
+UINT32 osAppInit(void){
+    UINT32 uwRet = LOS_OK;
+    hardware_init();
+    uwRet = create_task1();
+    if(LOS_OK != uwRet)
+        return uwRet;
+    uwRet = create_task2();
+    if(LOS_OK != uwRet)
+        return uwRet;
+    return LOS_OK;
+}
+
+//global variable
+UINT32 g_TskHandle1;
+UINT32 g_TskHandle2;
+
+CHAR* task1Name="task1";
+CHAR* task2Name="task2";
+
+void task1(void);
+void task2(void);
+
+UINT32 create_task1(){
+    return create_task(task1Name,&g_TskHandle1,4,(TSK_ENTRY_FUNC)task1);
+}
+
+UINT32 create_task2(){
+    return create_task(task2Name,&g_TskHandle2,3,(TSK_ENTRY_FUNC)task2);
 }
 
 
@@ -51,6 +89,7 @@ void task1(void){
     UINT32 count = 0;
     while(1){
         count++;
+        USARTSendByteString("1",eUart1);
         uwRet = LOS_TaskDelay(1000);
         if(LOS_OK != uwRet){
             return;
@@ -58,6 +97,20 @@ void task1(void){
     }
 }
 
+void task2(void){
+    UINT32 uwRet = LOS_OK;
+    UINT32 count = 0;
+    while(1){
+        count++;
+        USARTSendByteString("2",eUart1);
+        uwRet = LOS_TaskDelay(1000);
+        if(LOS_OK != uwRet){
+            return;
+        }
+    }
+}
+
+#if 0
 //config task parameter and creat task
 UINT32 creat_task1(){
     UINT32 uwRet = LOS_OK;
@@ -73,14 +126,21 @@ UINT32 creat_task1(){
         return uwRet;
     return uwRet;
 }
+#endif
 
-//user entry function
-UINT32 osAPPInit(void){
+UINT32 create_task(CHAR*taskName,UINT32*taskHandle,UINT16 taskPrio,TSK_ENTRY_FUNC pFun){
     UINT32 uwRet = LOS_OK;
-    hardware_init();
-    uwRet = creat_task1();
+    TSK_INIT_PARAM_S task_init_param;//struct of task parameter
+    task_init_param.usTaskPrio = taskPrio;
+    task_init_param.pfnTaskEntry = pFun;
+    task_init_param.uwStackSize = LOSCFG_BASE_CORE_TSK_DEFAULT_STACK_SIZE;
+    task_init_param.uwResved = LOS_TASK_STATUS_DETACHED;
+    task_init_param.pcName = taskName;
+
+    uwRet = LOS_TaskCreate(taskHandle,&task_init_param);
     if(LOS_OK != uwRet)
         return uwRet;
-    return LOS_OK;
+    return uwRet;
 }
+
 

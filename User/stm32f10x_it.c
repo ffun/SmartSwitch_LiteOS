@@ -24,6 +24,15 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x_it.h"
 
+#if 0
+//below is added by fang
+#include "sysTypeDef.h"
+extern volatile u32 TimeTickMs;
+extern const u16 MAX_TimerCnt;
+extern USARTHOOK_t uart1Hook,uart2Hook,uart3Hook;
+extern VOIDHOOK_t timerHook;
+//end add
+#endif
 /** @addtogroup STM32F10x_StdPeriph_Template
   * @{
   */
@@ -156,5 +165,6 @@ __weak void SysTick_Handler(void)
   * @}
   */ 
 
+//
 
 /******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/

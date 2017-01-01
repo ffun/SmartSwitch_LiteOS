@@ -9,9 +9,13 @@ USARTHOOK_t uart1Hook=0,uart2Hook=0,uart3Hook=0;
 //buffer define
 UartBuffer_t Uart1Buffer={0,0,{0}},Uart3Buffer={0,0,{0}};
 
+void USART_NVIC_Configuration(void);
 
 void USART_Config(void)
 {
+    //uart nvic config
+    //USART_NVIC_Configuration();
+    //uart config
 	GPIO_InitTypeDef GPIO_InitStructure;
 	USART_InitTypeDef USART_InitStructure;
 
@@ -82,6 +86,33 @@ void USART_Config(void)
 
 }
 
+//uart nvic config
+void USART_NVIC_Configuration(void){
+    NVIC_InitTypeDef NVIC_InitStructure;
+
+	/* Configure the NVIC Preemption Priority Bits */  
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_0);
+  
+	/* Enable the USART1 Interrupt */
+	NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_Init(&NVIC_InitStructure);
+
+	/* Enable the USART2 Interrupt */
+	NVIC_InitStructure.NVIC_IRQChannel = USART2_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_Init(&NVIC_InitStructure);
+
+    //if use usart3 change #if
+#if 0
+	NVIC_InitStructure.NVIC_IRQChannel = USART3_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_Init(&NVIC_InitStructure);
+#endif
+}
 
 //send data
 void USARTSendData(u16 SendData,eUartType uartType){
@@ -133,7 +164,7 @@ void USARTSendLine(u8*str,eUartType uartType){
 	USARTSendByteString(newLine,uartType);
 }
 
-
+/*********for set UartHook***********/
 void setUartHOOK(void(*fun)(u16),eUartType uartType){
 	switch(uartType)
 	{

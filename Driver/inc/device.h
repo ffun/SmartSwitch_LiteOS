@@ -8,7 +8,8 @@ file info:
 */
 #include "pm25.h"
 #include "ds18b20.h"
-#include "ds18b20.h"
+#include "timerDriver.h"
+#include "uartConfig.h"
 
 #ifndef DEVICE_H
 #define DEVICE_H

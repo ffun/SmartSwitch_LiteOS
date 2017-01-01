@@ -23,7 +23,6 @@ typedef enum{
 	eUart1=0,eUart2,eUart3
 }eUartType;
 
-//for uart1 serial port
 void USART_Config(void);
 
 void USARTSendData(u16 SendData,eUartType uartType);

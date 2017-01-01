@@ -87,7 +87,7 @@ extern "C" {
  * Vector table section
  */
 #ifndef LITE_OS_SEC_VEC
-#define LITE_OS_SEC_VEC          //__attribute__ ((section(".vector.bss")))
+#define LITE_OS_SEC_VEC          __attribute__ ((section(".vector.bss")))
 #endif
 
 /**

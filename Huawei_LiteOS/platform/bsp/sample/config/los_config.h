@@ -709,6 +709,9 @@ extern UINT32 osCpupInit(VOID);
 
 extern void osBackTrace(void);
 
+//added by fang
+extern UINT32 osAppInit(void);
+
 #ifdef __cplusplus
 #if __cplusplus
 }

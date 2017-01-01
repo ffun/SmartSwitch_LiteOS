@@ -48,4 +48,9 @@ void TIM2_Configuration(void)
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2 , DISABLE);	//先关闭等待使用  
 }
 
+void TIM2_init(void){
+    TIM2_NVIC_Configuration();
+    TIM2_Configuration();
+}
+
 

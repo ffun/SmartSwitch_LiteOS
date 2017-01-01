@@ -198,7 +198,8 @@ int main(void)
     if (uwRet != LOS_OK) {
         return LOS_NOK;
     }
-
+    //added by fang
+    osAppInit();
     LOS_Start();
 
     for (;;);
