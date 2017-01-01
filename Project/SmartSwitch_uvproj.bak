@@ -358,13 +358,13 @@
             <wLevel>2</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>0</uC99>
+            <uC99>1</uC99>
             <useXO>0</useXO>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define>STM32F10X_HD,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\User;..\Libraries\CMSIS;..\Libraries\FWLib\inc</IncludePath>
+              <IncludePath>..\User;..\Libraries\CMSIS;..\Libraries\FWLib\inc;..\Huawei_LiteOS\kernel\base\include;..\Huawei_LiteOS\kernel\include;..\Huawei_LiteOS\platform\bsp\sample\config;..\Huawei_LiteOS\platform\cpu\arm\cortex-m4</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -569,9 +569,113 @@
         </Group>
         <Group>
           <GroupName>LiteOS_kernel</GroupName>
+          <Files>
+            <File>
+              <FileName>los_priqueue.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Huawei_LiteOS\kernel\base\core\los_priqueue.c</FilePath>
+            </File>
+            <File>
+              <FileName>los_swtmr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Huawei_LiteOS\kernel\base\core\los_swtmr.c</FilePath>
+            </File>
+            <File>
+              <FileName>los_sys.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Huawei_LiteOS\kernel\base\core\los_sys.c</FilePath>
+            </File>
+            <File>
+              <FileName>los_task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Huawei_LiteOS\kernel\base\core\los_task.c</FilePath>
+            </File>
+            <File>
+              <FileName>los_tick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Huawei_LiteOS\kernel\base\core\los_tick.c</FilePath>
+            </File>
+            <File>
+              <FileName>los_timeslice.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Huawei_LiteOS\kernel\base\core\los_timeslice.c</FilePath>
+            </File>
+            <File>
+              <FileName>los_event.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Huawei_LiteOS\kernel\base\ipc\los_event.c</FilePath>
+            </File>
+            <File>
+              <FileName>los_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Huawei_LiteOS\kernel\base\ipc\los_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>los_queue.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Huawei_LiteOS\kernel\base\ipc\los_queue.c</FilePath>
+            </File>
+            <File>
+              <FileName>los_sem.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Huawei_LiteOS\kernel\base\ipc\los_sem.c</FilePath>
+            </File>
+            <File>
+              <FileName>los_membox.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Huawei_LiteOS\kernel\base\mem\los_membox.c</FilePath>
+            </File>
+            <File>
+              <FileName>los_memory.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Huawei_LiteOS\kernel\base\mem\los_memory.c</FilePath>
+            </File>
+            <File>
+              <FileName>los_memstat.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Huawei_LiteOS\kernel\base\mem\los_memstat.c</FilePath>
+            </File>
+            <File>
+              <FileName>los_multipledlinkhead.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Huawei_LiteOS\kernel\base\mem\los_multipledlinkhead.c</FilePath>
+            </File>
+            <File>
+              <FileName>los_misc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Huawei_LiteOS\kernel\base\misc\los_misc.c</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>iLiteOS_platform</GroupName>
+          <Files>
+            <File>
+              <FileName>los_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Huawei_LiteOS\platform\bsp\sample\config\los_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>los_hw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Huawei_LiteOS\platform\cpu\arm\cortex-m4\los_hw.c</FilePath>
+            </File>
+            <File>
+              <FileName>los_hw_tick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Huawei_LiteOS\platform\cpu\arm\cortex-m4\los_hw_tick.c</FilePath>
+            </File>
+            <File>
+              <FileName>los_hwi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Huawei_LiteOS\platform\cpu\arm\cortex-m4\los_hwi.c</FilePath>
+            </File>
+            <File>
+              <FileName>los_dispatch.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>..\Huawei_LiteOS\platform\cpu\arm\cortex-m4\los_dispatch.s</FilePath>
+            </File>
+          </Files>
         </Group>
       </Groups>
     </Target>
