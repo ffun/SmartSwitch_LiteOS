@@ -364,7 +364,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_HD,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\User;..\Libraries\CMSIS;..\Libraries\FWLib\inc;..\Huawei_LiteOS\kernel\base\include;..\Huawei_LiteOS\kernel\include;..\Huawei_LiteOS\platform\bsp\sample\config;..\Huawei_LiteOS\platform\cpu\arm\cortex-m4</IncludePath>
+              <IncludePath>..\User;..\Libraries\CMSIS;..\Libraries\FWLib\inc;..\Huawei_LiteOS\kernel\base\include;..\Huawei_LiteOS\kernel\include;..\Huawei_LiteOS\platform\bsp\sample\config;..\Huawei_LiteOS\platform\cpu\arm\cortex-m4;..\Driver\inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -566,6 +566,23 @@
         </Group>
         <Group>
           <GroupName>driver</GroupName>
+          <Files>
+            <File>
+              <FileName>ds18b20.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Driver\src\ds18b20.c</FilePath>
+            </File>
+            <File>
+              <FileName>pm25.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Driver\src\pm25.c</FilePath>
+            </File>
+            <File>
+              <FileName>relay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Driver\src\relay.c</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>LiteOS_kernel</GroupName>
