@@ -41,10 +41,10 @@
 #include "platform.h"
 #include "toollib.h"
 #include "device.h"
-
+extern void hwi_test(void);
 //hardware init
 void hardware_init(void){
-    env_init();
+    env_init();hwi_test();
 }
 UINT32 create_task1();
 UINT32 create_task2();
