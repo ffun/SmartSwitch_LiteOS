@@ -567,6 +567,11 @@
               <FileType>1</FileType>
               <FilePath>..\User\platform.c</FilePath>
             </File>
+            <File>
+              <FileName>user_interrupt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\user_interrupt.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

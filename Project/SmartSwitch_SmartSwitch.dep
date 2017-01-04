@@ -391,7 +391,7 @@ I (..\Libraries\FWLIB\inc\stm32f10x_tim.h)(0x4D783BB4)
 I (..\Libraries\FWLIB\inc\stm32f10x_usart.h)(0x4D783BB4)
 I (..\Libraries\FWLIB\inc\misc.h)(0x4D783BB4)
 I (..\Libraries\FWLIB\inc\stm32f10x_rcc.h)(0x4D783BB4)
-F (..\User\main.c)(0x586A7006)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\User -I..\Libraries\CMSIS -I..\Libraries\FWLib\inc -I..\Huawei_LiteOS\kernel\base\include -I..\Huawei_LiteOS\kernel\include -I..\Huawei_LiteOS\platform\bsp\sample\config -I..\Huawei_LiteOS\platform\cpu\arm\cortex-m4 -I..\Driver\inc -I..\util-I F:\SoftWareStudy\Keil_v5\ARM\RV31\INC-I F:\SoftWareStudy\Keil_v5\ARM\PACK\ARM\CMSIS\4.1.0\CMSIS\Include-I F:\SoftWareStudy\Keil_v5\ARM\Inc\ST\STM32F10x-DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\output\main.o --omf_browse ..\output\main.crf --depend ..\output\main.d)
+F (..\User\main.c)(0x586D2C16)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\User -I..\Libraries\CMSIS -I..\Libraries\FWLib\inc -I..\Huawei_LiteOS\kernel\base\include -I..\Huawei_LiteOS\kernel\include -I..\Huawei_LiteOS\platform\bsp\sample\config -I..\Huawei_LiteOS\platform\cpu\arm\cortex-m4 -I..\Driver\inc -I..\util-I F:\SoftWareStudy\Keil_v5\ARM\RV31\INC-I F:\SoftWareStudy\Keil_v5\ARM\PACK\ARM\CMSIS\4.1.0\CMSIS\Include-I F:\SoftWareStudy\Keil_v5\ARM\Inc\ST\STM32F10x-DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\output\main.o --omf_browse ..\output\main.crf --depend ..\output\main.d)
 I (F:\SoftWareStudy\Keil_v5\ARM\ARMCC\include\stdio.h)(0x53463A44)
 I (F:\SoftWareStudy\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x53463A44)
 I (F:\SoftWareStudy\Keil_v5\ARM\ARMCC\include\string.h)(0x53463A44)
@@ -434,11 +434,13 @@ I (..\User\sysTypeDef.h)(0x586914FE)
 I (..\util\list_fang.h)(0x586933EE)
 I (..\util\map_fang.h)(0x5869351B)
 I (..\util\queue_fang.h)(0x5869368F)
-I (..\Driver\inc\device.h)(0x58694A32)
+I (..\Driver\inc\device.h)(0x586D26C5)
 I (..\Driver\inc\pm25.h)(0x58690D7C)
 I (..\Driver\inc\ds18b20.h)(0x58690EBC)
 I (..\Driver\inc\timerDriver.h)(0x58694737)
 I (..\Driver\inc\uartConfig.h)(0x586948D7)
+I (..\Driver\inc\bsp_dht11.h)(0x586D2A77)
+I (..\Libraries\FWLib\inc\stm32f10x_rcc.h)(0x4D783BB4)
 F (..\User\stm32f10x_it.c)(0x58694D6B)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\User -I..\Libraries\CMSIS -I..\Libraries\FWLib\inc -I..\Huawei_LiteOS\kernel\base\include -I..\Huawei_LiteOS\kernel\include -I..\Huawei_LiteOS\platform\bsp\sample\config -I..\Huawei_LiteOS\platform\cpu\arm\cortex-m4 -I..\Driver\inc -I..\util-I F:\SoftWareStudy\Keil_v5\ARM\RV31\INC-I F:\SoftWareStudy\Keil_v5\ARM\PACK\ARM\CMSIS\4.1.0\CMSIS\Include-I F:\SoftWareStudy\Keil_v5\ARM\Inc\ST\STM32F10x-DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\output\stm32f10x_it.o --omf_browse ..\output\stm32f10x_it.crf --depend ..\output\stm32f10x_it.d)
 I (..\User\stm32f10x_it.h)(0x4D99A59E)
 I (..\Libraries\CMSIS\stm32f10x.h)(0x4D783CB4)
@@ -457,13 +459,28 @@ I (..\Libraries\FWLIB\inc\stm32f10x_usart.h)(0x4D783BB4)
 I (..\Libraries\FWLIB\inc\misc.h)(0x4D783BB4)
 F (..\User\platform.c)(0x58694A6C)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\User -I..\Libraries\CMSIS -I..\Libraries\FWLib\inc -I..\Huawei_LiteOS\kernel\base\include -I..\Huawei_LiteOS\kernel\include -I..\Huawei_LiteOS\platform\bsp\sample\config -I..\Huawei_LiteOS\platform\cpu\arm\cortex-m4 -I..\Driver\inc -I..\util-I F:\SoftWareStudy\Keil_v5\ARM\RV31\INC-I F:\SoftWareStudy\Keil_v5\ARM\PACK\ARM\CMSIS\4.1.0\CMSIS\Include-I F:\SoftWareStudy\Keil_v5\ARM\Inc\ST\STM32F10x-DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\output\platform.o --omf_browse ..\output\platform.crf --depend ..\output\platform.d)
 I (..\User\platform.h)(0x586A6F50)
-I (..\Driver\inc\device.h)(0x58694A32)
+I (..\Driver\inc\device.h)(0x586D26C5)
 I (..\Driver\inc\pm25.h)(0x58690D7C)
 I (..\Driver\inc\ds18b20.h)(0x58690EBC)
 I (..\Driver\inc\timerDriver.h)(0x58694737)
 I (..\Driver\inc\uartConfig.h)(0x586948D7)
 I (..\User\baseTypeDef.h)(0x573A7B06)
 I (F:\SoftWareStudy\Keil_v5\ARM\ARMCC\include\stdint.h)(0x53463A44)
+I (..\Driver\inc\bsp_dht11.h)(0x586D2A77)
+I (..\Libraries\CMSIS\stm32f10x.h)(0x4D783CB4)
+I (..\Libraries\CMSIS\core_cm3.h)(0x4D523B58)
+I (..\Libraries\CMSIS\system_stm32f10x.h)(0x4D783CAA)
+I (..\User\stm32f10x_conf.h)(0x5867DFAC)
+I (..\Libraries\FWLib\inc\stm32f10x_adc.h)(0x4D783BB4)
+I (..\Libraries\FWLib\inc\stm32f10x_dbgmcu.h)(0x4D783BB4)
+I (..\Libraries\FWLib\inc\stm32f10x_dma.h)(0x4D783BB4)
+I (..\Libraries\FWLib\inc\stm32f10x_exti.h)(0x4D783BB4)
+I (..\Libraries\FWLib\inc\stm32f10x_flash.h)(0x4D783BB4)
+I (..\Libraries\FWLib\inc\stm32f10x_gpio.h)(0x4D783BB4)
+I (..\Libraries\FWLib\inc\stm32f10x_tim.h)(0x4D783BB4)
+I (..\Libraries\FWLib\inc\stm32f10x_usart.h)(0x4D783BB4)
+I (..\Libraries\FWLib\inc\misc.h)(0x4D783BB4)
+I (..\Libraries\FWLib\inc\stm32f10x_rcc.h)(0x4D783BB4)
 I (..\Driver\inc\esp8266wifi.h)(0x574BCE85)
 I (..\User\sysTypeDef.h)(0x586914FE)
 F (..\User\user_interrupt.c)(0x586A7E63)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\User -I..\Libraries\CMSIS -I..\Libraries\FWLib\inc -I..\Huawei_LiteOS\kernel\base\include -I..\Huawei_LiteOS\kernel\include -I..\Huawei_LiteOS\platform\bsp\sample\config -I..\Huawei_LiteOS\platform\cpu\arm\cortex-m4 -I..\Driver\inc -I..\util-I F:\SoftWareStudy\Keil_v5\ARM\RV31\INC-I F:\SoftWareStudy\Keil_v5\ARM\PACK\ARM\CMSIS\4.1.0\CMSIS\Include-I F:\SoftWareStudy\Keil_v5\ARM\Inc\ST\STM32F10x-DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\output\user_interrupt.o --omf_browse ..\output\user_interrupt.crf --depend ..\output\user_interrupt.d)
@@ -553,14 +570,46 @@ I (..\Libraries\FWLib\inc\stm32f10x_usart.h)(0x4D783BB4)
 I (..\Libraries\FWLib\inc\misc.h)(0x4D783BB4)
 I (..\Libraries\FWLib\inc\stm32f10x_rcc.h)(0x4D783BB4)
 I (..\Driver\inc\timerDriver.h)(0x58694737)
-F (..\Driver\src\device.c)(0x58694DEC)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\User -I..\Libraries\CMSIS -I..\Libraries\FWLib\inc -I..\Huawei_LiteOS\kernel\base\include -I..\Huawei_LiteOS\kernel\include -I..\Huawei_LiteOS\platform\bsp\sample\config -I..\Huawei_LiteOS\platform\cpu\arm\cortex-m4 -I..\Driver\inc -I..\util-I F:\SoftWareStudy\Keil_v5\ARM\RV31\INC-I F:\SoftWareStudy\Keil_v5\ARM\PACK\ARM\CMSIS\4.1.0\CMSIS\Include-I F:\SoftWareStudy\Keil_v5\ARM\Inc\ST\STM32F10x-DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\output\device.o --omf_browse ..\output\device.crf --depend ..\output\device.d)
-I (..\Driver\inc\device.h)(0x58694A32)
+F (..\Driver\src\device.c)(0x586D2708)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\User -I..\Libraries\CMSIS -I..\Libraries\FWLib\inc -I..\Huawei_LiteOS\kernel\base\include -I..\Huawei_LiteOS\kernel\include -I..\Huawei_LiteOS\platform\bsp\sample\config -I..\Huawei_LiteOS\platform\cpu\arm\cortex-m4 -I..\Driver\inc -I..\util-I F:\SoftWareStudy\Keil_v5\ARM\RV31\INC-I F:\SoftWareStudy\Keil_v5\ARM\PACK\ARM\CMSIS\4.1.0\CMSIS\Include-I F:\SoftWareStudy\Keil_v5\ARM\Inc\ST\STM32F10x-DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\output\device.o --omf_browse ..\output\device.crf --depend ..\output\device.d)
+I (..\Driver\inc\device.h)(0x586D26C5)
 I (..\Driver\inc\pm25.h)(0x58690D7C)
 I (..\Driver\inc\ds18b20.h)(0x58690EBC)
 I (..\Driver\inc\timerDriver.h)(0x58694737)
 I (..\Driver\inc\uartConfig.h)(0x586948D7)
 I (..\User\baseTypeDef.h)(0x573A7B06)
 I (F:\SoftWareStudy\Keil_v5\ARM\ARMCC\include\stdint.h)(0x53463A44)
+I (..\Driver\inc\bsp_dht11.h)(0x586D2A77)
+I (..\Libraries\CMSIS\stm32f10x.h)(0x4D783CB4)
+I (..\Libraries\CMSIS\core_cm3.h)(0x4D523B58)
+I (..\Libraries\CMSIS\system_stm32f10x.h)(0x4D783CAA)
+I (..\User\stm32f10x_conf.h)(0x5867DFAC)
+I (..\Libraries\FWLib\inc\stm32f10x_adc.h)(0x4D783BB4)
+I (..\Libraries\FWLib\inc\stm32f10x_dbgmcu.h)(0x4D783BB4)
+I (..\Libraries\FWLib\inc\stm32f10x_dma.h)(0x4D783BB4)
+I (..\Libraries\FWLib\inc\stm32f10x_exti.h)(0x4D783BB4)
+I (..\Libraries\FWLib\inc\stm32f10x_flash.h)(0x4D783BB4)
+I (..\Libraries\FWLib\inc\stm32f10x_gpio.h)(0x4D783BB4)
+I (..\Libraries\FWLib\inc\stm32f10x_tim.h)(0x4D783BB4)
+I (..\Libraries\FWLib\inc\stm32f10x_usart.h)(0x4D783BB4)
+I (..\Libraries\FWLib\inc\misc.h)(0x4D783BB4)
+I (..\Libraries\FWLib\inc\stm32f10x_rcc.h)(0x4D783BB4)
+F (..\Driver\src\bsp_dht11.c)(0x585FCEA9)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\User -I..\Libraries\CMSIS -I..\Libraries\FWLib\inc -I..\Huawei_LiteOS\kernel\base\include -I..\Huawei_LiteOS\kernel\include -I..\Huawei_LiteOS\platform\bsp\sample\config -I..\Huawei_LiteOS\platform\cpu\arm\cortex-m4 -I..\Driver\inc -I..\util-I F:\SoftWareStudy\Keil_v5\ARM\RV31\INC-I F:\SoftWareStudy\Keil_v5\ARM\PACK\ARM\CMSIS\4.1.0\CMSIS\Include-I F:\SoftWareStudy\Keil_v5\ARM\Inc\ST\STM32F10x-DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\output\bsp_dht11.o --omf_browse ..\output\bsp_dht11.crf --depend ..\output\bsp_dht11.d)
+I (..\Driver\inc\bsp_dht11.h)(0x586D2A77)
+I (..\Libraries\CMSIS\stm32f10x.h)(0x4D783CB4)
+I (..\Libraries\CMSIS\core_cm3.h)(0x4D523B58)
+I (F:\SoftWareStudy\Keil_v5\ARM\ARMCC\include\stdint.h)(0x53463A44)
+I (..\Libraries\CMSIS\system_stm32f10x.h)(0x4D783CAA)
+I (..\User\stm32f10x_conf.h)(0x5867DFAC)
+I (..\Libraries\FWLib\inc\stm32f10x_adc.h)(0x4D783BB4)
+I (..\Libraries\FWLib\inc\stm32f10x_dbgmcu.h)(0x4D783BB4)
+I (..\Libraries\FWLib\inc\stm32f10x_dma.h)(0x4D783BB4)
+I (..\Libraries\FWLib\inc\stm32f10x_exti.h)(0x4D783BB4)
+I (..\Libraries\FWLib\inc\stm32f10x_flash.h)(0x4D783BB4)
+I (..\Libraries\FWLib\inc\stm32f10x_gpio.h)(0x4D783BB4)
+I (..\Libraries\FWLib\inc\stm32f10x_tim.h)(0x4D783BB4)
+I (..\Libraries\FWLib\inc\stm32f10x_usart.h)(0x4D783BB4)
+I (..\Libraries\FWLib\inc\misc.h)(0x4D783BB4)
+I (..\Libraries\FWLib\inc\stm32f10x_rcc.h)(0x4D783BB4)
 F (..\Huawei_LiteOS\kernel\base\core\los_priqueue.c)(0x5772141E)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\User -I..\Libraries\CMSIS -I..\Libraries\FWLib\inc -I..\Huawei_LiteOS\kernel\base\include -I..\Huawei_LiteOS\kernel\include -I..\Huawei_LiteOS\platform\bsp\sample\config -I..\Huawei_LiteOS\platform\cpu\arm\cortex-m4 -I..\Driver\inc -I..\util-I F:\SoftWareStudy\Keil_v5\ARM\RV31\INC-I F:\SoftWareStudy\Keil_v5\ARM\PACK\ARM\CMSIS\4.1.0\CMSIS\Include-I F:\SoftWareStudy\Keil_v5\ARM\Inc\ST\STM32F10x-DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\output\los_priqueue.o --omf_browse ..\output\los_priqueue.crf --depend ..\output\los_priqueue.d)
 I (..\Huawei_LiteOS\kernel\base\core\los_priqueue.inc)(0x5772141E)
 I (..\Huawei_LiteOS\kernel\base\include\los_priqueue.ph)(0x5772141E)

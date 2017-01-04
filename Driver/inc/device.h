@@ -10,6 +10,7 @@ file info:
 #include "ds18b20.h"
 #include "timerDriver.h"
 #include "uartConfig.h"
+#include "bsp_dht11.h"
 
 #ifndef DEVICE_H
 #define DEVICE_H
