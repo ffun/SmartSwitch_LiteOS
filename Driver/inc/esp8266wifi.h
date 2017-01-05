@@ -14,22 +14,33 @@ file info:
 #ifndef ESP8266WIFI_H
 #define ESP8266WIFI_H
 
-typedef enum{
-	eConnetRouterError,eConnectServerError,eStartPassThroughError,eWiFiConfigSuccess
-}WiFiCfgStatus;
 //wifi connected status
-typedef enum{Connected=0,Disconnected = !Connected}WiFiStatus;
+typedef enum{Connected=0,Disconnected = !Connected}WiFiStatus_t;
 
-/********************buffer operation************************/
 
-u8 isWiFiBufferEnable(void);
-void resetWiFiBuffer(void);
-Buffer_t* getWiFiBuffer(void);
+/***************esp8266wifi config****************/
 
-/********************esp8266wifi operation************************/
 
-WiFiCfgStatus esp8266Config(void);
+u8 esp8266Config(void);
 
+void esp8266_reset(void);
+
+void setTouChuan(void);
+
+void startTransmit(void);
+
+void stopTouChuan(void);
+
+WiFiStatus_t getWiFiStatus(void);
+
+u8 isResponseOK(void);
+
+void reConnectWiFi(void);
+
+void esp8266_SmartConfig(void);
+
+
+/***********esp8266wifi send and receive*****************/
 /*
 function:create a tcp connection to the server
 return:1---success;0---failed
@@ -39,15 +50,7 @@ void esp8266WiFi_WriteData(u8* data,u8 length);
 void esp8266WiFi_Write(u8* str);
 void esp8266WiFi_WriteLine(u8* str);
 
-u8 getWiFiConnectedStatus(void);
-
-void stopPassThroughMode(void);
-
-u8 isResponseOK(void);
-
-void reConnectWiFi(void);
-
-/********************HooK operation************************/
+/***************HooK operation***************/
 void HookOfEsp8266WiFi(u8 data);
 
 #endif

@@ -617,6 +617,11 @@
               <FileType>1</FileType>
               <FilePath>..\Driver\src\bsp_dht11.c</FilePath>
             </File>
+            <File>
+              <FileName>esp8266wifi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Driver\src\esp8266wifi.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
