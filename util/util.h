@@ -69,7 +69,7 @@ u8 isBufferEabled(Buffer_t*);
 //get the number of data in the buffer
 u8 Buffer_dataLength(Buffer_t*);
 
-u8 Buffer_MaxLength();
+u8 Buffer_MaxLength(void);
 
 u8* getBuffer(Buffer_t*);
 

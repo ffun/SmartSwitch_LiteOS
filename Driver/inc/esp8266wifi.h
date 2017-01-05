@@ -25,6 +25,8 @@ u8 esp8266Config(void);
 
 void esp8266_reset(void);
 
+void setWiFiSTAMode(void);
+
 void setTouChuan(void);
 
 void startTransmit(void);

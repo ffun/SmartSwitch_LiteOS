@@ -7,7 +7,6 @@ file info:
 ***************************
 */
 #include "pm25.h"
-#include "ds18b20.h"
 #include "timerDriver.h"
 #include "uartConfig.h"
 #include "bsp_dht11.h"
@@ -15,7 +14,7 @@ file info:
 #ifndef DEVICE_H
 #define DEVICE_H
 
-extern void device_init(void);
+void device_init(void);
 
 #endif
 

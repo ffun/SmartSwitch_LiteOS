@@ -15,7 +15,7 @@ void byteCopy(u8* dst,u8* src,s16 Length){
 }
 
 u8 byteCompare(u8* mem1,u8* mem2,s16 Length){
-    u8 i=0,result = 0;
+    u8 i=0;
 	if(0 == mem1 || 0 == mem2)//check pointer
 		return 0;
     while(i<Length){//start compare
@@ -116,13 +116,22 @@ u8* u8toString(u8 num){
 	return itoaBuffer;
 }
 
-//
+#ifdef Timer_t_H
 Timer_t delay_timer;
 void delay_ms(u16 n)
 {
 	initTimerWithSeciton(&delay_timer,n);
 	while(delay_timer.end != getSystemTime());
 }
+
+#else
+extern void Delay_ms(uint16_t  time);
+void delay_ms(u16 n)
+{
+	Delay_ms(n);
+}
+
+#endif
 
 void delay_s(u16 n){
 	while(n>0)

@@ -91,6 +91,12 @@ u8 esp8266Config(void)
 	return 1;
 }
 
+void setWiFiSTAMode(void){
+    esp8266WiFi_WriteLine(CMD_SetWifiSTAMode);
+    delay_ms(100);
+}
+
+
 void setTouChuan(void){
     esp8266WiFi_WriteLine(CMD_SetTouChuan);
 }
@@ -105,7 +111,10 @@ void startTransmit(void){
 }
 
 void esp8266_reset(void){
+    stopTouChuan();
+    setWiFiSTAMode();
     esp8266WiFi_WriteLine(CMD_Reset);
+    delay_s(4);
 }
 
 
@@ -160,6 +169,9 @@ u8 esp8266WiFi_TcpConnect(char* ip,u16 port){
 
 void esp8266WiFi_WriteData(u8* data,u8 length){
 	u8 i=0;
+    //check
+    if(0 == data)
+        return;
 	while(i<length){
 		USARTSendData(data[i++],Esp8266WiFi_UART);
 	}
@@ -176,6 +188,9 @@ void esp8266WiFi_Write(u8* str){
 
 void esp8266WiFi_WriteLine(u8* str){
 	u8 newline[]="\r\n";
+    //check
+    if(0 == str)
+        return;
 	esp8266WiFi_Write(str);
 	esp8266WiFi_Write(newline);
 }

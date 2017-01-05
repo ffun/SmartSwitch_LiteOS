@@ -10,7 +10,8 @@ file info:
 #include "baseTypeDef.h" 
 
 #ifndef SERVERACTION_H
-#define SERVERACTION_H
+#define SERVERACTION_H
+
 
 /*****server buffer operation*****/
 void ServerBuf_init(void);
@@ -33,6 +34,16 @@ typedef enum{
 }ServerMsg_t;
 
 ServerMsg_t getServerMsg(void);
+
+typedef struct{
+    char *pm25,*tempreture,*humidity,*SwitchStatus;
+}Sensor_Info_t;
+
+/*
+Msg example:
+"hdu123&pm25:500,tempreture:17,humidity:47,switch:open\r\n"
+*/
+void sendDeviceMsg(Sensor_Info_t*);
 
 /********************HooK operation************************/
 void HookOfServerAction(u8 data);
