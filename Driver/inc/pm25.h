@@ -6,13 +6,16 @@ file info:
 	pm2.5 driver
 ***************************
 */
+#include "baseTypeDef.h" 
 
 #ifndef PM25_H
 #define PM25_H
 
-extern void PM25_init(void);
+void PM25_init(void);
 
-extern float getPM25Index(void);
+u8 getPM25Index(float*);
+
+void PM25HOOK(u8);
 
 #endif
 

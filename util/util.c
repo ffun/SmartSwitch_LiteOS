@@ -14,6 +14,19 @@ void byteCopy(u8* dst,u8* src,s16 Length){
 	}
 }
 
+u8 byteCompare(u8* mem1,u8* mem2,s16 Length){
+    u8 i=0,result = 0;
+	if(0 == mem1 || 0 == mem2)//check pointer
+		return 0;
+    while(i<Length){//start compare
+        if(mem1[i] != mem2[i])
+            return 0;
+        i++;
+    }
+    return 1;
+}
+
+
 void BufferSimpleCopy(Buffer_t*dst,Buffer_t*src){
     if(0 == dst || 0 == src)//check pointer
 		return;
@@ -118,5 +131,74 @@ void delay_s(u16 n){
 		n--;
 	}
 }
+
+void Buffer_init(Buffer_t*buf){
+    //check
+    if(0 == buf)
+        return;
+    buf->cnt = buf->enable = buf->index = 0;
+}
+
+void Buffer_clear(Buffer_t*buf){
+    Buffer_init(buf);
+}
+
+void Buffer_reset(Buffer_t*buf){
+    //check
+    if(0 == buf)
+        return;
+    buf->index = 0;
+}
+
+void Buffer_add(Buffer_t*buf,u8 data){
+    //check
+    if(0 == buf)
+        return;
+    if(BUFFSIZE == buf->cnt)
+        return;
+    buf->buffer[buf->cnt++] = data;
+}
+
+void Buffer_enable(Buffer_t*buf){
+    //check
+    if(0 == buf)
+        return;
+    buf->enable = 1;
+}
+
+void Buffer_disable(Buffer_t*buf){
+    //check
+    if(0 == buf)
+        return;
+    buf->enable = 0;
+}
+
+
+u8 isBufferEabled(Buffer_t*buf){
+    //check
+    if(0 == buf)
+        return 0;
+    return buf->enable;
+}
+
+u8 Buffer_dataLength(Buffer_t*buf){
+    //check
+    if(0 == buf)
+        return 0;
+    return buf->cnt;
+}
+
+u8 Buffer_MaxLength(){
+    return BUFFSIZE;
+}
+
+u8* getBuffer(Buffer_t*buf){
+    //check
+    if(0 == buf)
+        return 0;
+    return buf->buffer;
+}
+
+
 
 

@@ -29,6 +29,12 @@ Buffer_t* getWiFiBuffer(void);
 /********************esp8266wifi operation************************/
 
 WiFiCfgStatus esp8266Config(void);
+
+/*
+function:create a tcp connection to the server
+return:1---success;0---failed
+*/
+u8 esp8266WiFi_TcpConnect(char* ip,u16 port);
 void esp8266WiFi_WriteData(u8* data,u8 length);
 void esp8266WiFi_Write(u8* str);
 void esp8266WiFi_WriteLine(u8* str);

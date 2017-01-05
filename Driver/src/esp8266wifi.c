@@ -1,6 +1,7 @@
 #include "esp8266wifi.h"
 #include "uartConfig.h"
 #include "util.h"
+#include "stdio.h"
 
 #define Esp8266WiFi_UART eUart1
 
@@ -148,6 +149,29 @@ WiFiCfgStatus esp8266Config(void)
 	return eWiFiConfigSuccess;
 }
 
+u8 esp8266WiFi_TcpConnect(char* ip,u16 port){
+    //result code
+    u8 result = 0;
+    //check
+    if(0 == ip)
+        return result;
+    //AT cmd of Tcp connection
+    char* sTcpConHead[] = "AT+CIPSTART=\"TCP\",\"";
+    char sPort[10];
+    //get string of u16's port
+    sprintf(sPort,"%d",port);
+    //connect
+    esp8266WiFi_Write(sTcpConHead);
+    esp8266WiFi_Write(ip);
+    esp8266WiFi_WriteData("\",",2);
+    esp8266WiFi_WriteLine(sPort);
+    //check if connect success
+    
+    
+    return result;
+}
+
+
 void esp8266WiFi_WriteData(u8* data,u8 length){
 	u8 i=0;
 	while(i<length){
@@ -192,7 +216,6 @@ static u8 bResponseOK=0;
 u8 isResponseOK(void){
 	if(bResponseOK == 1){
 		bResponseOK = 0;
-		//resetWiFiBuffer();
 		return 1;
 	}
 	return 0;
@@ -200,58 +223,23 @@ u8 isResponseOK(void){
 
 
 /***************HooK operation*****************/
-//data is between "ST" and "END",like"STxxxxEND"
+//check if the data end with "OK"
 void HookOfEsp8266WiFi(u8 data){
-    static u8 Scnt=0,Tcnt=0;
-    static u8 Ocnt=0,Kcnt=0;//for esp8266 init
-    static u8 Ecnt=0,Ncnt=0,Dcnt=0;
-	appendWiFiBuffer(data);//add  data to wifi buffer
-
-/***************"END" flag*******************/    
-	if(data == 'E')
-		Ecnt = getWiFiBufferDataLength();
-	if(data == 'N')
-		Ncnt= getWiFiBufferDataLength();
-    if(data == 'D')
-		Dcnt= getWiFiBufferDataLength();
-    
-	//find "END" string
-	if((Ecnt+1)==Ncnt && (Ncnt+1)==Dcnt){
-		WiFiBuffer.cnt = Ecnt-1;//modify the wifibuffer.cnt
-		//reset the Ecnt,Ncnt,Dcnt
-		Ecnt=Ncnt=Dcnt=0;
-		//enable the buffer
-		enableWiFiBuffer();
-		//for test
-		bResponseOK = 1;
-	}
-
-
-/***************"ST" flag*******************/
-
-    if(data == 'S')
-		Scnt = getWiFiBufferDataLength();
-	if(data == 'T')
-		Tcnt = getWiFiBufferDataLength();
-    
-    //find "ST" string
-    if(Scnt+1 == Tcnt){
-        //setWiFiBufferIndex(Tcnt-1);//next u8 data index is (Tcnt-1)
-        setWiFiBufferIndex(Tcnt);
-        Scnt = Tcnt =0;
-    }
+    static u8 mState = 0;
 /***************"OK" flag*******************/
-    if(data == 'O')
-        Ocnt = getWiFiBufferDataLength();
-    if(data == 'K')
-        Kcnt = getWiFiBufferDataLength();
-    if(Ocnt+1 == Kcnt){
-        Ocnt = Kcnt =0;
-        #if 0
-        //WiFiBuffer.cnt = Ocnt - 1;
-        WiFiBuffer.cnt = Ocnt - 1;
-        enableWiFiBuffer();
-        #endif
+    switch(data){
+        case 'O':
+            mState = 1;break;
+        case 'K':
+            if(1 == mState)
+                mState = 2;
+            else
+                mState = 0;
+            break;
+        default:
+            mState = 0;break;
+    }
+    if(2 == mState)
         bResponseOK = 1;
     }
 	

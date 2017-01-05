@@ -2,9 +2,8 @@
 **************************
 file info:
 	author:fang.junpeng
-	start time:2016-05-09
-	email:tfzsll@126.com
-	usartConfig 
+	start time:2016-01-05
+	server action
 ***************************
 */
 
@@ -13,25 +12,30 @@ file info:
 #ifndef SERVERACTION_H
 #define SERVERACTION_H
 
-u8 isClientGetResponse(void);
+/*****server buffer operation*****/
+void ServerBuf_init(void);
 
-void Client_sendConfirmCode(void);
+//get the data buf 
+u8* getServerBuf(void);
 
-void Client_sendDeviceID(u8* id);
+//get the data buf and disable the buffer
+u8* getServerBufDisable(void);
 
-void Client_sendCompleteCode(void);
-void Client_sendCharging(void);
+u8 isServerBufferEabled(void);
 
-void Client_send(u8* str);
+void ServerBuffer_clear(void);
 
-u8* getServerResponse(void);
+u8 ServerBuf_dataLength(void);
 
-u8 Client_getChargeTimer(u8*response);
+/*******client-server bussiness*******/
+typedef enum{
+    CMD_close = 0,CMD_open,CMD_common,CMD_unknow
+}ServerMsg_t;
 
-u8 Client_getServerConfirmCode(u8*response);
+ServerMsg_t getServerMsg(void);
 
-//keep connected
-void Client_keepConnected(void);
+/********************HooK operation************************/
+void HookOfServerAction(u8 data);
 
 #endif
 

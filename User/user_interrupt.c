@@ -27,7 +27,6 @@ void uart_irqhandle(int irq,void *dev)
         //USARTSendByteString("\n int the func uart_irqhandle \n",eUart1);
         USARTSendData(data,eUart1);
 	}
-
 }
 
 void hwi_test(){    

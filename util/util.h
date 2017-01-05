@@ -17,6 +17,9 @@ file info:
 //direct copy the byte without any check of array overflow
 void byteCopy(u8* dst,u8* src,s16 Length);
 
+u8 byteCompare(u8* dst,u8* src,s16 Length);
+
+
 //a full clone of src buffer
 void BufferSimpleCopy(Buffer_t*dst,Buffer_t*src);
 
@@ -42,6 +45,33 @@ void delay_ms(u16 n);
 
 void delay_s(u16 n);
 
+/*****server buffer operation*****/
+//init a buffer
+void Buffer_init(Buffer_t*);
+
+//make a buffer clear
+void Buffer_clear(Buffer_t*);
+
+//make the index of buffer be zero
+void Buffer_reset(Buffer_t*);
+
+//add a u8 data to buffer
+void Buffer_add(Buffer_t*,u8);
+
+void Buffer_enable(Buffer_t*);
+
+void Buffer_disable(Buffer_t*);
+
+
+//check the buffer if has the data
+u8 isBufferEabled(Buffer_t*);
+
+//get the number of data in the buffer
+u8 Buffer_dataLength(Buffer_t*);
+
+u8 Buffer_MaxLength();
+
+u8* getBuffer(Buffer_t*);
 
 #endif
 
