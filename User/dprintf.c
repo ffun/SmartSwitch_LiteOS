@@ -1,16 +1,16 @@
-/*
-**************************
-file info:
-	author:fang.junpeng
-	start time:2017-01-07
-	debug printf
-***************************
-*/
+#include "dprintf.h"
 
-#include "uartConfig.h"
-#define DebugUart eUart3
+#define DebugUart eUart2
 
 void dprintf(u8* str){
     USARTSendByteString(str,DebugUart);
+}
+
+void dprintfln(u8* str){
+    USARTSendLine(str,DebugUart);
+}
+
+void dprintByte(u8 data){
+    USARTSendData(data,DebugUart);
 }
 

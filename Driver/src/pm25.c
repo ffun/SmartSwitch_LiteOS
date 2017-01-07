@@ -1,4 +1,5 @@
 #include "pm25.h"
+#include "dprintf.h"
 
 static u8 pm25data[7];
 static u8 enabled = 0;//indicate if the data is ok
@@ -49,6 +50,7 @@ void PM25HOOK(u8 data){
         cnt =0;//clear the cnt
 		mState = END;//change the state
 		enabled = 1;
+        dprintfln("getpm25");
 	}
 	//get the byte
 	if(START == mState){

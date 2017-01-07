@@ -48,4 +48,12 @@ void relay_off(void){
     return;
 }
 
+unsigned char relay_status(void){
+    if(TRUE == s_bRelayOn)
+        return 1;
+    else
+        return 0;
+}
+
+
 

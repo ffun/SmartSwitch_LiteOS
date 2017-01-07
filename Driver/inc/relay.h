@@ -9,10 +9,15 @@ file info:
 #ifndef RELAY_H
 #define RELAY_H
 
-extern void relay_init(void);
+void relay_init(void);
 
-extern void relay_on(void);
+void relay_on(void);
 
-extern void relay_off(void);
+void relay_off(void);
+
+/*
+reutrn:1---ON,0---OFF
+*/
+unsigned char relay_status(void);
 
 #endif
