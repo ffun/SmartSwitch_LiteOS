@@ -38,10 +38,16 @@
 #include "platform.h"
 #include "toollib.h"
 #include "device.h"
+#include "serverAction.h"
 #include "dprintf.h"
 
 //debug Switch
 #define DebugON 1
+
+//event
+EVENT_CB_S sEvnt;
+#define Event_smartconfig (1)
+#define Event_wifi       (2)
 
 //creat task api
 UINT32 create_task(CHAR*taskName,UINT32*taskHandle,UINT16 taskPrio,TSK_ENTRY_FUNC pFun);
@@ -56,6 +62,9 @@ void hardware_init(void){
 UINT32 create_SensorTask(void);
 UINT32 create_SmartConfigTask(void);
 UINT32 create_wifiTask(void);
+UINT32 create_testwifi(void);
+UINT32 create_ServerTask(void);
+
 
 //user entry function
 UINT32 osAppInit(void){
@@ -78,17 +87,24 @@ UINT32 g_TskHandle2;
 UINT32 g_SensorTaskHandle;
 UINT32 g_WifiTaskHandle;
 UINT32 g_SmartConfigTaskHandle;
+UINT32 g_ServerTaskHandle;
+UINT32 g_wifitest;
 
 CHAR* task2Name="task2";
 CHAR* SensorTaskName="SensorTask";
 CHAR* SmartConfigTaskName = "SmartConfigTask";
 CHAR* wifiTaskName="wifiTask";
+CHAR* wifitestName="wifitest";
+CHAR* ServerTaskName = "serverAction";
 
 void task2(void);
 //bussiness task
 void sensor_task(void);//for collecting sensor's data
 void smartConfig_task(void);
 void wifi_task(void);
+void wifi_test(void);
+void server_task(void);
+
 
 UINT32 create_task2(){
     return create_task(task2Name,&g_TskHandle2,3,(TSK_ENTRY_FUNC)task2);
@@ -98,13 +114,21 @@ UINT32 create_SensorTask(){
     return create_task(SensorTaskName,&g_SensorTaskHandle,3,(TSK_ENTRY_FUNC)sensor_task);
 }
 
-UINT32 creat_wifiTask(){
+UINT32 create_wifiTask(){
     return create_task(wifiTaskName,&g_WifiTaskHandle,3,(TSK_ENTRY_FUNC)wifi_task);
+}
+
+UINT32 create_ServerTask(){
+    return create_task(ServerTaskName,&g_ServerTaskHandle,3,(TSK_ENTRY_FUNC)server_task);
 }
 
 UINT32 create_SmartConfigTask(void){
     return create_task(SmartConfigTaskName,&g_SmartConfigTaskHandle,\
         1,(TSK_ENTRY_FUNC)smartConfig_task);
+}
+
+UINT32 create_testwifi(void){
+    return create_task(wifitestName,&g_wifitest,3,(TSK_ENTRY_FUNC)wifi_test);
 }
 
 
@@ -122,12 +146,15 @@ void task2(void){
     }
 }
 
+char cStrTemp[10];
+char cStrHumi[10];
+char cStrPm25[10];
+char Status_open[]="open";
+char Status_close[]="close";
+
 void sensor_task(void){
     UINT32 uwRet = LOS_OK;
-	char cStrTemp[10];
-	char cStrHumi[10];
-    char cStrPm25[10];
-
+	
     //sersor's value
     FLOAT pm25Value = 0.0;
     DHT11_Data_TypeDef  DHT11_Data;
@@ -136,8 +163,8 @@ void sensor_task(void){
     while(1){
         //get DHT11's data
         if(DHT11_Read_TempAndHumidity(&DHT11_Data)==SUCCESS){
-            sprintf(cStrTemp,"%d.%d C",DHT11_Data.temp_int,DHT11_Data.temp_deci);
-			sprintf(cStrHumi,"%d.%d %%RH",DHT11_Data.humi_int,DHT11_Data.humi_deci);
+            sprintf(cStrTemp,"%d.%d",DHT11_Data.temp_int,DHT11_Data.temp_deci);
+			sprintf(cStrHumi,"%d.%d",DHT11_Data.humi_int,DHT11_Data.humi_deci);
             
             #if DebugON
             dprintf("temp:");
@@ -157,6 +184,17 @@ void sensor_task(void){
             dprintf("pm25:");
             dprintfln(cStrPm25);
             #endif
+            //fill the sensor info
+            SensorInfo_addTemp(cStrTemp);
+            SensorInfo_addHumi(cStrHumi);
+            SensorInfo_addPm25(cStrPm25);
+            //get switch status
+            if(relay_status())
+                SensorInfo_addSwStatus(Status_open);
+            else
+                SensorInfo_addSwStatus(Status_close);
+            //set sensor info OK
+            setSensorInfoOK();
         }
         //delay
         uwRet = LOS_TaskDelay(2000);
@@ -166,12 +204,90 @@ void sensor_task(void){
 }
 
 void smartConfig_task(void){
-    
+    UINT32 uwRet = LOS_OK;
+    UINT8 succ = 0;
+    esp8266_reset();
+    if(isJoinRouterOK())
+        succ = 1;
+    if(succ == 1){}
 }
 
 void wifi_task(void){
+    char* ip = "192.168.0.102";
+    UINT16 PORT = 8080;
+    UINT8 mode = 0;
+    const UINT8 cnt = 10;
+    UINT8 i=0;
+    
+    if(mode == 1){//join the root
+        
+    }
+    BeginConnect:
+    //connect and into TouChuan
+    //connect to server
+    i = 0;
+    do{
+        esp8266WiFi_TcpConnect(ip,PORT);
+        Delay_ms(200+i*50);
+        i++;
+    }while(!isResponseOK() || i==cnt);
+    if(i == cnt){
+        goto BeginConnect;
+        dprintfln("connected faile.retry");
+    }
+    //set TouChuan
+    i=0;
+    do{
+        setTouChuan();
+        Delay_ms(100+i*50);
+        i++;
+    }while(!isResponseOK() || i==cnt);
+    if(i == cnt){
+        goto BeginConnect;
+    }
+    //start TouChuan
+    i=0;
+    do{
+        startTransmit();
+        Delay_ms(100+i*50);
+    }while(!isResponseOK() || i==cnt);
+    if(i == cnt){
+        goto BeginConnect;
+    }
+    while(1){
+    dprintfln("123");
+        LOS_TaskDelay(2000);
+    }
+}
+
+void wifi_test(void){
     
 }
+
+void server_task(void){
+    UINT32 uwRet;
+    Sensor_Info_t *info = 0;
+    while(1){
+        info = getSensorInfo();
+        if(0 == info){
+            uwRet = LOS_TaskDelay(1000);
+        }
+        else{
+            sendDeviceMsg(info);
+        }
+        switch(getServerMsg()){
+            case CMD_close:
+                break;
+            case CMD_open:
+                break;
+                
+            default:
+            case CMD_unknow:
+                break;
+        }
+    }
+}
+
 
 
 #if 0

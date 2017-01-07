@@ -7,7 +7,7 @@
 
 //wifi status
 static WiFiStatus_t sWifStatus = Disconnected;
-
+static u8 sJoinRouterOK = 0;
 //
 
 /*************************wifi cmd code****************************/
@@ -49,7 +49,7 @@ u8 esp8266Config(void)
 	if(cnt == 10)
 		return 0;
 	cnt = 0;
-	USARTSendLine("join router success",eUart2);
+	dprintfln("join router success");
 	//4.connect to server
 	esp8266WiFi_WriteLine(strConnect2Server);
 	do{
@@ -61,7 +61,7 @@ u8 esp8266Config(void)
 	if(cnt == 10)
 		return 0;
 	cnt = 0;
-	USARTSendLine("connect server success",eUart2);
+	dprintfln("connect server success");
 	//
 	esp8266WiFi_WriteLine(CMD_SetTouChuan);
 	do{
@@ -73,7 +73,7 @@ u8 esp8266Config(void)
 	if(cnt == 10)
 		return 0;
 	cnt = 0;
-	USARTSendLine("set passthrough success",eUart2);
+	dprintfln("set passthrough success");
 	//
 	esp8266WiFi_WriteLine(CMD_StartTransmit);
 	do{
@@ -85,7 +85,7 @@ u8 esp8266Config(void)
 	if(cnt == 10)
 		return 0;
 	cnt = 0;
-	USARTSendLine("start transmit",eUart2);
+	dprintfln("start transmit");
 	sWifStatus = Connected;
 
 	return 1;
@@ -114,7 +114,7 @@ void esp8266_reset(void){
     stopTouChuan();
     setWiFiSTAMode();
     esp8266WiFi_WriteLine(CMD_Reset);
-    delay_s(4);
+    delay_s(2);
 }
 
 
@@ -140,6 +140,18 @@ u8 isResponseOK(void){
 	return 0;
 }
 
+u8 isJoinRouterOK(void){
+    u8 result = 0;
+    result = sJoinRouterOK;
+    setJoinRouterStatus(0);
+    return result;
+}
+//set sJoinRouterOK state,0--failed,1--success
+static void setJoinRouterStatus(u8 state){
+    sJoinRouterOK = state;
+}
+
+
 void esp8266_SmartConfig(void){
     esp8266WiFi_WriteLine(CMD_SmartConfig);
     //check if success
@@ -162,7 +174,6 @@ u8 esp8266WiFi_TcpConnect(char* ip,u16 port){
     esp8266WiFi_WriteData("\",",2);
     esp8266WiFi_WriteLine(sPort);
     //check if connect success
-    
     return result;
 }
 
@@ -199,21 +210,43 @@ void esp8266WiFi_WriteLine(u8* str){
 /***************HooK operation*****************/
 //check if the data end with "OK"
 void HookOfEsp8266WiFi(u8 data){
-    static u8 mState = 0;
+    static u8 mOKState = 0;
+    static u8 mGotState = 0;
 /***************"OK" flag*******************/
     switch(data){
         case 'O':
-            mState = 1;break;
+            mOKState = 1;break;
         case 'K':
-            if(1 == mState)
-                mState = 2;
+            if(1 == mOKState)
+                mOKState = 2;
             else
-                mState = 0;
+                mOKState = 0;
             break;
         default:
-            mState = 0;break;
+            mOKState = 0;break;
     }
-    if(2 == mState)
+    if(2 == mOKState)
         bResponseOK = 1;
+/****************"GOT" flag******************/
+    switch(data){
+        case 'G':
+            mGotState = 1;break;
+        case 'O':
+            if(1 == mGotState)
+                mGotState = 2;
+            else
+                mGotState = 0;
+            break;
+        case 'T':
+            if(2 == mGotState)
+                mGotState = 3;
+            else
+                mGotState = 0;
+            break;
+        default:
+            mGotState = 0;break;
+    }
+    if(3 == mGotState)
+        setJoinRouterStatus(1);
 }
 

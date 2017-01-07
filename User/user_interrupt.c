@@ -12,6 +12,7 @@
 //Hook functions
 extern void PM25HOOK(u8 data);
 extern void HookOfEsp8266WiFi(u8 data);
+extern void HookOfServerAction(u8 data);
 
 extern void dprintf(u8* str);
 
@@ -29,7 +30,8 @@ void uart1_irqHandler(void)
 		//USART_ReceiveData(USART1);
 		data = (u8)(USART_ReceiveData(USART1));
         //do something
-        HookOfEsp8266WiFi(data);
+        HookOfEsp8266WiFi(data);//wifi 
+        HookOfServerAction(data);//server
         //debug output
         #if DebugON
         //dprintf("uart1_int");

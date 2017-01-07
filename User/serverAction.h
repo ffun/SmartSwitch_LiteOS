@@ -39,6 +39,20 @@ typedef struct{
     char *pm25,*tempreture,*humidity,*SwitchStatus;
 }Sensor_Info_t;
 
+void SensorInfo_addPm25(char*);
+
+void SensorInfo_addTemp(char*);
+
+void SensorInfo_addHumi(char*);
+
+void SensorInfo_addSwStatus(char*);
+
+void setSensorInfoOK(void);
+
+u8 isSersorInfoOK(void);
+
+Sensor_Info_t* getSensorInfo(void);
+
 /*
 Msg example:
 "hdu123&pm25:500,tempreture:17,humidity:47,switch:open\r\n"

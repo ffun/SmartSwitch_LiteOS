@@ -39,6 +39,9 @@ u8 isResponseOK(void);
 
 void reConnectWiFi(void);
 
+//for response of Join Router
+u8 isJoinRouterOK(void);
+
 void esp8266_SmartConfig(void);
 
 
