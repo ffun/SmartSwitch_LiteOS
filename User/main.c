@@ -41,7 +41,7 @@
 #include "dprintf.h"
 
 //debug Switch
-#define DebugON 0
+#define DebugON 1
 
 //creat task api
 UINT32 create_task(CHAR*taskName,UINT32*taskHandle,UINT16 taskPrio,TSK_ENTRY_FUNC pFun);
@@ -152,7 +152,7 @@ void sensor_task(void){
         }
         //get PM2.5's data
         if(getPM25Index(&pm25Value)){
-            sprintf(cStrPm25,".2%f",pm25Value);
+            sprintf(cStrPm25,"%f",pm25Value);
             #if DebugON
             dprintf("pm25:");
             dprintfln(cStrPm25);

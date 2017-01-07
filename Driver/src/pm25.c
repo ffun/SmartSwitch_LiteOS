@@ -30,7 +30,7 @@ u8 getPM25Index(float* result){
 	vout <<= 8;
 	vout |= pm25data[2];
 	//cal the pm2.5
-	*result = vout*1.0*A_Ratio/128.0;
+	*result = vout*1.0*A_Ratio/1024.0*5;
 
     //disable the data
     enabled = 0;
@@ -43,14 +43,12 @@ void PM25HOOK(u8 data){
     if(0xaa == data){
 		mState = START;
 		cnt = 0;
-		pm25data[cnt++] = data;
 	}
 	//end byte
-	else if(0xff == data && cnt== 6){
-        cnt =0;//clear the cnt
+	else if(0xff == data && 6 == cnt){
 		mState = END;//change the state
 		enabled = 1;
-        dprintfln("getpm25");
+        //dprintfln("getpm25");
 	}
 	//get the byte
 	if(START == mState){

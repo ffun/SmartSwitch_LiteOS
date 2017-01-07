@@ -65,7 +65,7 @@ void uart3_irqHandler(void){
         PM25HOOK(data);
         //debug output
         #if DebugON
-        dprintByte(data);
+        //dprintByte(data);
         #endif
 	}
 
