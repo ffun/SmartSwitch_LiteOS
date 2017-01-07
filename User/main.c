@@ -70,7 +70,8 @@ UINT32 create_ServerTask(void);
 UINT32 osAppInit(void){
     UINT32 uwRet = LOS_OK;
     hardware_init();
-    oneStepTouChuan("192.168.0.109",8080);
+    oneStepTouChuan("192.168.0.105",5055);
+//    oneStepTouChuan("192.168.0.109",8080);
     #if 0
     uwRet = create_wifiTask();
     if(LOS_OK != uwRet)
@@ -120,6 +121,7 @@ UINT32 create_SmartConfigTask(void){
 char cStrTemp[10];
 char cStrHumi[10];
 char cStrPm25[10];
+char* pm25Str = "0.00";
 char Status_open[]="open";
 char Status_close[]="close";
 void sensor_task(void){
@@ -154,6 +156,7 @@ void sensor_task(void){
             dprintf("pm25:");
             dprintfln(cStrPm25);
             #endif
+            #if 0
             //fill the sensor info
             SensorInfo_addTemp(cStrTemp);
             SensorInfo_addHumi(cStrHumi);
@@ -165,9 +168,22 @@ void sensor_task(void){
                 SensorInfo_addSwStatus(Status_close);
             //set sensor info OK
             setSensorInfoOK();
+            #endif
         }
         //delay
-        uwRet = LOS_TaskDelay(2000);
+         //fill the sensor info
+            SensorInfo_addTemp(cStrTemp);
+            SensorInfo_addHumi(cStrHumi);
+            SensorInfo_addPm25(pm25Str);
+            //get switch status
+            if(relay_status())
+                SensorInfo_addSwStatus(Status_open);
+            else
+                SensorInfo_addSwStatus(Status_close);
+            //set sensor info OK
+            setSensorInfoOK();
+            
+        uwRet = LOS_TaskDelay(1000);
 		if(uwRet !=LOS_OK)
 			return;
     }
