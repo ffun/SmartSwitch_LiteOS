@@ -33,11 +33,19 @@ void startTransmit(void);
 
 void stopTouChuan(void);
 
+//tcp connect,touchuan,start transmit
+void oneStepTouChuan(char*,u16);
+
 WiFiStatus_t getWiFiStatus(void);
 
 u8 isResponseOK(void);
 
-void reConnectWiFi(void);
+void setWifiOK(void);
+
+void setWifiFailed(void);
+
+
+WiFiStatus_t isWifiOK(void);
 
 //for response of Join Router
 u8 isJoinRouterOK(void);

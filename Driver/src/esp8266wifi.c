@@ -122,14 +122,18 @@ WiFiStatus_t getWiFiStatus(void){
 	return sWifStatus;
 }
 
-void reConnectWiFi(void){
-    //set wifi status
-    sWifStatus = Disconnected;
-    //stop passthrough Mode
-	//stopPassThroughMode();
-	if(esp8266Config())
-        sWifStatus = Connected;
+void setWifiOK(void){
+    sWifStatus = Connected;
 }
+
+void setWifiFailed(void){
+    sWifStatus = Disconnected;
+}
+
+WiFiStatus_t isWifiOK(void){
+    return sWifStatus;
+}
+
 
 static u8 bResponseOK=0;
 u8 isResponseOK(void){
@@ -139,6 +143,51 @@ u8 isResponseOK(void){
 	}
 	return 0;
 }
+
+void oneStepTouChuan(char*ip,u16 PORT){
+    u8 mode = 0;
+    const u8 cnt = 10;
+    u8 i=0;
+    //delay a while for 8266 power on
+    Delay_ms(2000);
+    if(mode == 1){//join the router
+        
+    }
+    BeginConnect:
+    //connect and into TouChuan
+    //connect to server
+    i = 0;
+    do{
+        esp8266WiFi_TcpConnect(ip,PORT);
+        Delay_ms(200+i*50);
+        i++;
+    }while(!isResponseOK() || i==cnt);
+    if(i == cnt){
+        goto BeginConnect;
+        dprintfln("connected faile.retry");
+    }
+    //set TouChuan
+    i=0;
+    do{
+        setTouChuan();
+        Delay_ms(100+i*50);
+        i++;
+    }while(!isResponseOK() || i==cnt);
+    if(i == cnt){
+        goto BeginConnect;
+    }
+    //start TouChuan
+    i=0;
+    do{
+        startTransmit();
+        Delay_ms(100+i*50);
+    }while(!isResponseOK() || i==cnt);
+    if(i == cnt){
+        goto BeginConnect;
+    }
+	setWifiOK();//set wifi OK
+}
+
 
 //set sJoinRouterOK state,0--failed,1--success
 static void setJoinRouterStatus(u8 state){

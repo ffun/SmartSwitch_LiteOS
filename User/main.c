@@ -70,52 +70,42 @@ UINT32 create_ServerTask(void);
 UINT32 osAppInit(void){
     UINT32 uwRet = LOS_OK;
     hardware_init();
-    //uwRet = create_task1();
-    uwRet = create_SensorTask();
-    if(LOS_OK != uwRet)
-        return uwRet;
+    oneStepTouChuan("192.168.0.109",8080);
     #if 0
-    uwRet = create_task2();
+    uwRet = create_wifiTask();
     if(LOS_OK != uwRet)
         return uwRet;
     #endif
+    #if 1
+    uwRet = create_SensorTask();
+    if(LOS_OK != uwRet)
+        return uwRet;
+    #endif
+    uwRet = create_ServerTask();
+    if(LOS_OK != uwRet)
+        return uwRet;
     return LOS_OK;
 }
 
 //global task handle variable
-UINT32 g_TskHandle2;
+
 UINT32 g_SensorTaskHandle;
-UINT32 g_WifiTaskHandle;
 UINT32 g_SmartConfigTaskHandle;
 UINT32 g_ServerTaskHandle;
-UINT32 g_wifitest;
 
-CHAR* task2Name="task2";
 CHAR* SensorTaskName="SensorTask";
 CHAR* SmartConfigTaskName = "SmartConfigTask";
-CHAR* wifiTaskName="wifiTask";
-CHAR* wifitestName="wifitest";
 CHAR* ServerTaskName = "serverAction";
 
-void task2(void);
 //bussiness task
 void sensor_task(void);//for collecting sensor's data
 void smartConfig_task(void);
-void wifi_task(void);
-void wifi_test(void);
+
 void server_task(void);
 
 
-UINT32 create_task2(){
-    return create_task(task2Name,&g_TskHandle2,3,(TSK_ENTRY_FUNC)task2);
-}
-
 UINT32 create_SensorTask(){
     return create_task(SensorTaskName,&g_SensorTaskHandle,3,(TSK_ENTRY_FUNC)sensor_task);
-}
-
-UINT32 create_wifiTask(){
-    return create_task(wifiTaskName,&g_WifiTaskHandle,3,(TSK_ENTRY_FUNC)wifi_task);
 }
 
 UINT32 create_ServerTask(){
@@ -127,31 +117,11 @@ UINT32 create_SmartConfigTask(void){
         1,(TSK_ENTRY_FUNC)smartConfig_task);
 }
 
-UINT32 create_testwifi(void){
-    return create_task(wifitestName,&g_wifitest,3,(TSK_ENTRY_FUNC)wifi_test);
-}
-
-
-//task function
-void task2(void){
-    UINT32 uwRet = LOS_OK;
-    UINT32 count = 0;
-    while(1){
-        count++;
-        dprintfln("1");
-        uwRet = LOS_TaskDelay(1000);
-        if(LOS_OK != uwRet){
-            return;
-        }
-    }
-}
-
 char cStrTemp[10];
 char cStrHumi[10];
 char cStrPm25[10];
 char Status_open[]="open";
 char Status_close[]="close";
-
 void sensor_task(void){
     UINT32 uwRet = LOS_OK;
 	
@@ -212,79 +182,37 @@ void smartConfig_task(void){
     if(succ == 1){}
 }
 
-void wifi_task(void){
-    char* ip = "192.168.0.102";
-    UINT16 PORT = 8080;
-    UINT8 mode = 0;
-    const UINT8 cnt = 10;
-    UINT8 i=0;
-    
-    if(mode == 1){//join the root
-        
-    }
-    BeginConnect:
-    //connect and into TouChuan
-    //connect to server
-    i = 0;
-    do{
-        esp8266WiFi_TcpConnect(ip,PORT);
-        Delay_ms(200+i*50);
-        i++;
-    }while(!isResponseOK() || i==cnt);
-    if(i == cnt){
-        goto BeginConnect;
-        dprintfln("connected faile.retry");
-    }
-    //set TouChuan
-    i=0;
-    do{
-        setTouChuan();
-        Delay_ms(100+i*50);
-        i++;
-    }while(!isResponseOK() || i==cnt);
-    if(i == cnt){
-        goto BeginConnect;
-    }
-    //start TouChuan
-    i=0;
-    do{
-        startTransmit();
-        Delay_ms(100+i*50);
-    }while(!isResponseOK() || i==cnt);
-    if(i == cnt){
-        goto BeginConnect;
-    }
-    while(1){
-    dprintfln("123");
-        LOS_TaskDelay(2000);
-    }
-}
-
-void wifi_test(void){
-    
-}
 
 void server_task(void){
     UINT32 uwRet;
     Sensor_Info_t *info = 0;
     while(1){
+        if(Disconnected == isWifiOK()){
+            uwRet = LOS_TaskDelay(5000);
+            continue;
+        }
         info = getSensorInfo();
         if(0 == info){
-            uwRet = LOS_TaskDelay(1000);
+            uwRet = LOS_TaskDelay(2000);
         }
         else{
             sendDeviceMsg(info);
         }
         switch(getServerMsg()){
             case CMD_close:
+                //close the switch
+                relay_off();
                 break;
             case CMD_open:
+                //open the switch
+                relay_on();
                 break;
                 
             default:
             case CMD_unknow:
                 break;
         }
+        uwRet = LOS_TaskDelay(1000);
     }
 }
 

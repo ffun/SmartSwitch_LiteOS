@@ -103,18 +103,19 @@ static void sendSensorInfo(Sensor_Info_t*sensorInfo){
     if(0 == sensorInfo)
         return;
     //send
-    esp8266WiFi_Write("pm25:");
+    esp8266WiFi_Write("pm=");
     esp8266WiFi_Write(sensorInfo->pm25);
-    esp8266WiFi_Write(",tempreture:");
-    esp8266WiFi_Write(sensorInfo->tempreture);
-    esp8266WiFi_Write(",humidity:");
+    esp8266WiFi_Write("&humidity=");
     esp8266WiFi_Write(sensorInfo->humidity);
-    esp8266WiFi_Write(",switch:");
+    esp8266WiFi_Write("&tempreture=");
+    esp8266WiFi_Write(sensorInfo->tempreture);
+    esp8266WiFi_Write("&status=");
     esp8266WiFi_WriteLine(sensorInfo->SwitchStatus);
 }
 
-static char* sDeviceId = "hdu123";
+static char* sDeviceId = "123";
 static void sendDeviceID(){
+    esp8266WiFi_Write("deviceID=");
     esp8266WiFi_Write(sDeviceId);
 }
 

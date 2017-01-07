@@ -12,6 +12,7 @@ file info:
 #include "bsp_dht11.h"
 #include "led.h"
 #include "key.h"
+#include "esp8266wifi.h"
 
 #ifndef DEVICE_H
 #define DEVICE_H
