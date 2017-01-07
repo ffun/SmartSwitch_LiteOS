@@ -140,17 +140,17 @@ u8 isResponseOK(void){
 	return 0;
 }
 
+//set sJoinRouterOK state,0--failed,1--success
+static void setJoinRouterStatus(u8 state){
+    sJoinRouterOK = state;
+}
+
 u8 isJoinRouterOK(void){
     u8 result = 0;
     result = sJoinRouterOK;
     setJoinRouterStatus(0);
     return result;
 }
-//set sJoinRouterOK state,0--failed,1--success
-static void setJoinRouterStatus(u8 state){
-    sJoinRouterOK = state;
-}
-
 
 void esp8266_SmartConfig(void){
     esp8266WiFi_WriteLine(CMD_SmartConfig);

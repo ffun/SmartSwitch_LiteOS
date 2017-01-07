@@ -113,6 +113,11 @@ static void sendSensorInfo(Sensor_Info_t*sensorInfo){
     esp8266WiFi_WriteLine(sensorInfo->SwitchStatus);
 }
 
+static char* sDeviceId = "hdu123";
+static void sendDeviceID(){
+    esp8266WiFi_Write(sDeviceId);
+}
+
 void sendDeviceMsg(Sensor_Info_t*sensorInfo){
     //check
     if(0 == sensorInfo)
