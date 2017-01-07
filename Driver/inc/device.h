@@ -10,6 +10,8 @@ file info:
 #include "timerDriver.h"
 #include "uartConfig.h"
 #include "bsp_dht11.h"
+#include "led.h"
+#include "key.h"
 
 #ifndef DEVICE_H
 #define DEVICE_H

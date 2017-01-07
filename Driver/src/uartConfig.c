@@ -65,7 +65,7 @@ void USART_Config(void)
 	USART_ITConfig(USART2,USART_IT_RXNE,ENABLE);
 	USART_Cmd(USART2,ENABLE);
 
-	/***************************uart2 config****************************/
+	/***************************uart3 config****************************/
 	//enable uart3 and gpioB clock
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3,ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE); 
@@ -85,6 +85,76 @@ void USART_Config(void)
 
 
 }
+
+void USART_newConfig(u32 BaudRate,eUartType uart){
+    GPIO_InitTypeDef GPIO_InitStructure;
+	USART_InitTypeDef USART_InitStructure;
+    //uart common setting
+    USART_InitStructure.USART_BaudRate = BaudRate;
+    USART_InitStructure.USART_WordLength = USART_WordLength_8b;	//数据位数设置：8位
+	USART_InitStructure.USART_StopBits = USART_StopBits_1; 	//停止位设置：1位
+	USART_InitStructure.USART_Parity = USART_Parity_No ;
+	USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+	USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
+    
+    switch(uart){
+        case eUart1:
+            /* 使能 USART1 时钟*/
+        	RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1 | RCC_APB2Periph_GPIOA, ENABLE); 
+            //gpio config
+            GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9;
+            GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP; //复用推挽输出
+            GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+            GPIO_Init(GPIOA, &GPIO_InitStructure);    
+  
+            GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
+            GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;	//浮空输入
+            GPIO_Init(GPIOA, &GPIO_InitStructure);   //初始化GPIOA
+            USART_Init(USART1, &USART_InitStructure);  //初始化USART1
+        	USART_ITConfig(USART1,USART_IT_RXNE,ENABLE);
+        	USART_Cmd(USART1, ENABLE);// USART1使能
+            break;
+        case eUart2:
+            //0.enable usart2 clock
+        	RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2,ENABLE);
+        	//1.gpio config for usart2
+            RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2,ENABLE);
+            GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
+        	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
+          	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+        	GPIO_Init(GPIOA, &GPIO_InitStructure);
+
+            GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;
+        	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+        	GPIO_Init(GPIOA, &GPIO_InitStructure);
+            //2.uart2 config
+        	USART_Init(USART2, &USART_InitStructure);
+        	//3.enable uart interrupt and enable uart
+        	USART_ITConfig(USART2,USART_IT_RXNE,ENABLE);
+        	USART_Cmd(USART2,ENABLE);
+            break;
+        case eUart3:
+           	RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3,ENABLE);
+        	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE); 
+        	//config
+        	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
+        	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
+          	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+        	GPIO_Init(GPIOB, &GPIO_InitStructure); 
+
+        	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11;
+        	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+        	GPIO_Init(GPIOB, &GPIO_InitStructure);
+	
+        	USART_Init(USART3, &USART_InitStructure);
+        	USART_ITConfig(USART3,USART_IT_RXNE,ENABLE);	
+        	USART_Cmd(USART3,ENABLE);
+            break;
+        default:
+            break;
+    }
+}
+
 
 //uart nvic config
 void USART_NVIC_Configuration(void){

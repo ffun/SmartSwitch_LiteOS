@@ -583,11 +583,6 @@
           <GroupName>driver</GroupName>
           <Files>
             <File>
-              <FileName>ds18b20.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Driver\src\ds18b20.c</FilePath>
-            </File>
-            <File>
               <FileName>pm25.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Driver\src\pm25.c</FilePath>

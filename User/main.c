@@ -44,9 +44,9 @@ extern void hwi_test(void);
 void hardware_init(void){
     env_init();hwi_test();
 }
-UINT32 create_task1();
-UINT32 create_task2();
-UINT32 create_SensorTask();
+
+UINT32 create_SensorTask(void);
+UINT32 create_SmartConfigTask(void);
 
 
 UINT32 create_task(CHAR*taskName,UINT32*taskHandle,UINT16 taskPrio,TSK_ENTRY_FUNC pFun);
@@ -71,15 +71,19 @@ UINT32 osAppInit(void){
 UINT32 g_TskHandle1;
 UINT32 g_TskHandle2;
 UINT32 g_SensorTask;
+UINT32 g_WifiTask;
 
 CHAR* task1Name="task1";
 CHAR* task2Name="task2";
 CHAR* SensorTName="SensorTask";
+CHAR* wifiTName="wifiTask";
 
 void task1(void);
 void task2(void);
 void sensor_task(void);//for collecting sensor's data
+void smartConfig_task(void);
 
+void wifiConect_task(void);
 
 UINT32 create_task1(){
     return create_task(task1Name,&g_TskHandle1,4,(TSK_ENTRY_FUNC)task1);
@@ -93,7 +97,9 @@ UINT32 create_SensorTask(){
     return create_task(SensorTName,&g_SensorTask,3,(TSK_ENTRY_FUNC)sensor_task);
 }
 
-
+UINT32 creat_wifiTask(){
+    return create_task(wifiTName,&g_WifiTask,3,(TSK_ENTRY_FUNC)wifiConect_task);
+}
 
 //task function
 void task1(void){
@@ -142,6 +148,12 @@ void sensor_task(void){
     }
 }
 
+void smartConfig_task(void){
+}
+
+void wifiConect_task(void){
+
+}
 
 #if 0
 //config task parameter and creat task

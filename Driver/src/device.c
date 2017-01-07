@@ -5,6 +5,8 @@ void device_init(void){
     //relay_init();
     USART_Config();
     DHT11_Init();
+    LED_init();
+    Key_init();
     //TIM2_init();
 }
 

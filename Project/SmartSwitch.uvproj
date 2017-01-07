@@ -577,6 +577,11 @@
               <FileType>1</FileType>
               <FilePath>..\User\serverAction.c</FilePath>
             </File>
+            <File>
+              <FileName>dprintf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\dprintf.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -616,6 +621,16 @@
               <FileName>esp8266wifi.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Driver\src\esp8266wifi.c</FilePath>
+            </File>
+            <File>
+              <FileName>key.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Driver\src\key.c</FilePath>
+            </File>
+            <File>
+              <FileName>led.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Driver\src\led.c</FilePath>
             </File>
           </Files>
         </Group>

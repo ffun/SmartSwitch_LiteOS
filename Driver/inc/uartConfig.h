@@ -25,6 +25,8 @@ typedef enum{
 
 void USART_Config(void);
 
+void USART_newConfig(u32 BaudRate,eUartType uart);
+
 void USARTSendData(u16 SendData,eUartType uartType);
 void USARTSendByteArrary(u8* data,u8 length,eUartType uartType);
 

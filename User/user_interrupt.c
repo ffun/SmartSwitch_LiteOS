@@ -1,41 +1,69 @@
 #include "los_hwi.h"
 #include "los_typedef.h"
-#define HWI_NUM_INT_UART1 37
+
+#define UART1_INT (37)
+#define UART2_INT (38)
+#define UART3_INT (39)
 
 //stm32 head Files
 #include "stm32f10x_usart.h"
 #include "uartConfig.h"
 
+//Hook functions
+extern void PM25HOOK(u8 data);
+extern void HookOfEsp8266WiFi(u8 data);
 
+extern void dprintf(u8* str);
 
-void uart_irqhandle(int irq,void *dev)
+#define DebugON 1
+
+void uart1_irqHandler(void)
 {
     u16 data;
-    //printf("\n int the func uart_irqhandle \n");
-    
+        
 	//receive interrupt
 	if(USART_GetITStatus(USART1,USART_IT_RXNE)!=RESET){
 		USART_ClearITPendingBit(USART1,USART_IT_RXNE);//clear receive Interrupt
-		//do something
+		
 		//USART_ReceiveData(USART1);
 		data = (u8)(USART_ReceiveData(USART1));
-        #if 0
-		if(uart1Hook != 0)
-			uart1Hook(data);
-		HookOfEsp8266WiFi(data);
+        //do something
+        HookOfEsp8266WiFi(data);
+        //debug output
+        #if DebugON
+        dprintf("uart1_int");
         #endif
-        //USARTSendByteString("\n int the func uart_irqhandle \n",eUart1);
-        USARTSendData(data,eUart1);
 	}
 }
+
+void uart2_irqHandler(void){
+    u16 data;
+        
+	//receive interrupt
+	if(USART_GetITStatus(USART2,USART_IT_RXNE)!=RESET){
+		USART_ClearITPendingBit(USART2,USART_IT_RXNE);//clear receive Interrupt
+		//receive the data
+		data = (u8)(USART_ReceiveData(USART2));
+        //do something
+        PM25HOOK(data);
+        //debug output
+        #if DebugON
+        dprintf("uart2_int");
+        #endif
+	}
+
+}
+
+void uart3_irqHandler(void){
+}
+
 
 void hwi_test(){    
     int a = 1;
     UINTPTR uvIntSave;
     uvIntSave = LOS_IntLock();
-    LOS_HwiCreate(HWI_NUM_INT_UART1, 0,0,uart_irqhandle,NULL);//create interrupt
-    //hal_interrupt_unmask(HWI_NUM_INT50);
+    LOS_HwiCreate(UART1_INT, 0,0,uart1_irqHandler,0);//create uart1 interrupt
+    LOS_HwiCreate(UART2_INT,0,0,uart2_irqHandler,0);//create uart2 interrupt
     LOS_IntRestore(uvIntSave);
-    //hal_interrupt_mask(HWI_NUM_INT50);
 }
 
