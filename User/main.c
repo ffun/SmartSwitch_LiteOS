@@ -49,6 +49,9 @@ EVENT_CB_S sEvnt;
 #define Event_smartconfig (1)
 #define Event_wifi       (2)
 
+//senor info
+static Sensor_Info_t *fillSensorInfo(void);
+
 //creat task api
 UINT32 create_task(CHAR*taskName,UINT32*taskHandle,UINT16 taskPrio,TSK_ENTRY_FUNC pFun);
 
@@ -69,7 +72,7 @@ UINT32 osAppInit(void){
     UINT32 uwRet = LOS_OK;
     hardware_init();
 //    oneStepTouChuan("192.168.0.105",5055);
-    oneStepTouChuan("192.168.0.109",8080);
+    oneStepTouChuan("192.168.0.106",8080);
     #if 0
     uwRet = create_wifiTask();
     if(LOS_OK != uwRet)
@@ -108,7 +111,7 @@ UINT32 create_SensorTask(){
 }
 
 UINT32 create_ServerTask(){
-    return create_task(ServerTaskName,&g_ServerTaskHandle,2,(TSK_ENTRY_FUNC)server_task);
+    return create_task(ServerTaskName,&g_ServerTaskHandle,3,(TSK_ENTRY_FUNC)server_task);
 }
 
 UINT32 create_SmartConfigTask(void){
@@ -170,16 +173,7 @@ void sensor_task(void){
         }
         #if 1
          //fill the sensor info
-            SensorInfo_addTemp(cStrTemp);
-            SensorInfo_addHumi(cStrHumi);
-            SensorInfo_addPm25(pm25Str);
-            //get switch status
-            if(relay_status())
-                SensorInfo_addSwStatus(Status_open);
-            else
-                SensorInfo_addSwStatus(Status_close);
-            //set sensor info OK
-            setSensorInfoOK();
+            fillSensorInfo();
         #endif
         //delay
         uwRet = LOS_TaskDelay(1000);
@@ -218,19 +212,23 @@ void server_task(void){
             case CMD_close:
                 //close the switch
                 relay_off();
+                //sendSensorInfo(fillSensorInfo());
                 break;
             case CMD_open:
                 //open the switch
                 relay_on();
+                //sendSensorInfo(fillSensorInfo());
                 break;
             case CMD_timer://timer bussiness
                 minutes = getTimerMinutes();
+                //sendSensorInfo(fillSensorInfo());
                 while(minutes != 0){
                     relay_on();
                     minutes--;
                     LOS_TaskDelay(1000);
                 }
                 relay_off();
+                //sendSensorInfo(fillSensorInfo());
                 break;
             default:
             case CMD_unknow:
@@ -240,7 +238,21 @@ void server_task(void){
     }
 }
 
-
+Sensor_Info_t *fillSensorInfo(void){
+    SensorInfo_addTemp(cStrTemp);
+    SensorInfo_addHumi(cStrHumi);
+    SensorInfo_addPm25(pm25Str);
+    //get switch status
+    if(relay_status()){
+        SensorInfo_addSwStatus(Status_open);
+    }
+    else{
+        SensorInfo_addSwStatus(Status_close);
+        //set sensor info OK
+        setSensorInfoOK();
+    }
+    return getSensorInfo();
+}
 
 #if 0
 //config task parameter and creat task

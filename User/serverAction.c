@@ -104,16 +104,16 @@ ServerMsg_t getServerMsg(void){
         case OpenCmdLength:
             if(byteCompare(getServerBuf(),OpenCmd,OpenCmdLength))
                 MsgType = CMD_open;
-            else if(byteCompare(getServerBuf(),TimerCmd,TimerCmdLength)){
-                MsgType = CMD_timer;//set msg timer
-                //get Minutes
-                getMinutesFromMsg();
-            }
             ServerBuffer_clear();
             break;
         case CloseCmdLength:
             if(byteCompare(getServerBuf(),CloseCmd,CloseCmdLength))
                 MsgType = CMD_close;
+            else if(byteCompare(getServerBuf(),TimerCmd,TimerCmdLength)){//timer function
+                MsgType = CMD_timer;//set msg timer
+                //get Minutes
+                getMinutesFromMsg();
+            }
             ServerBuffer_clear();
             break;
         case ComResLength:
@@ -143,7 +143,7 @@ static void sendSensorInfo(Sensor_Info_t*sensorInfo){
     esp8266WiFi_WriteLine(sensorInfo->SwitchStatus);
 }
 
-static char* sDeviceId = "123";
+static char* sDeviceId = "hdu123";
 static void sendDeviceID(){
     esp8266WiFi_Write("deviceID=");
     esp8266WiFi_Write(sDeviceId);

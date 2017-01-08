@@ -149,7 +149,7 @@ void oneStepTouChuan(char*ip,u16 PORT){
     const u8 cnt = 10;
     u8 i=0;
     //delay a while for 8266 power on
-    Delay_ms(2000);
+    Delay_ms(1500);
     if(mode == 1){//join the router
         
     }
