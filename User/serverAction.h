@@ -30,7 +30,7 @@ u8 ServerBuf_dataLength(void);
 
 /*******client-server bussiness*******/
 typedef enum{
-    CMD_close = 0,CMD_open,CMD_common,CMD_unknow
+    CMD_close = 0,CMD_open,CMD_common,CMD_timer,CMD_unknow
 }ServerMsg_t;
 
 ServerMsg_t getServerMsg(void);
@@ -52,6 +52,9 @@ void setSensorInfoOK(void);
 u8 isSersorInfoOK(void);
 
 Sensor_Info_t* getSensorInfo(void);
+//when Timer cmd,get the mintues
+u8 getTimerMinutes(void);
+
 
 /*
 Msg example:

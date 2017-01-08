@@ -61,8 +61,6 @@ void hardware_init(void){
 
 UINT32 create_SensorTask(void);
 UINT32 create_SmartConfigTask(void);
-UINT32 create_wifiTask(void);
-UINT32 create_testwifi(void);
 UINT32 create_ServerTask(void);
 
 
@@ -70,8 +68,8 @@ UINT32 create_ServerTask(void);
 UINT32 osAppInit(void){
     UINT32 uwRet = LOS_OK;
     hardware_init();
-    oneStepTouChuan("192.168.0.105",5055);
-//    oneStepTouChuan("192.168.0.109",8080);
+//    oneStepTouChuan("192.168.0.105",5055);
+    oneStepTouChuan("192.168.0.109",8080);
     #if 0
     uwRet = create_wifiTask();
     if(LOS_OK != uwRet)
@@ -110,7 +108,7 @@ UINT32 create_SensorTask(){
 }
 
 UINT32 create_ServerTask(){
-    return create_task(ServerTaskName,&g_ServerTaskHandle,3,(TSK_ENTRY_FUNC)server_task);
+    return create_task(ServerTaskName,&g_ServerTaskHandle,2,(TSK_ENTRY_FUNC)server_task);
 }
 
 UINT32 create_SmartConfigTask(void){
@@ -170,7 +168,7 @@ void sensor_task(void){
             setSensorInfoOK();
             #endif
         }
-        //delay
+        #if 1
          //fill the sensor info
             SensorInfo_addTemp(cStrTemp);
             SensorInfo_addHumi(cStrHumi);
@@ -182,7 +180,8 @@ void sensor_task(void){
                 SensorInfo_addSwStatus(Status_close);
             //set sensor info OK
             setSensorInfoOK();
-            
+        #endif
+        //delay
         uwRet = LOS_TaskDelay(1000);
 		if(uwRet !=LOS_OK)
 			return;
@@ -202,6 +201,7 @@ void smartConfig_task(void){
 void server_task(void){
     UINT32 uwRet;
     Sensor_Info_t *info = 0;
+    UINT8 minutes = 0;
     while(1){
         if(Disconnected == isWifiOK()){
             uwRet = LOS_TaskDelay(5000);
@@ -223,12 +223,20 @@ void server_task(void){
                 //open the switch
                 relay_on();
                 break;
-                
+            case CMD_timer://timer bussiness
+                minutes = getTimerMinutes();
+                while(minutes != 0){
+                    relay_on();
+                    minutes--;
+                    LOS_TaskDelay(1000);
+                }
+                relay_off();
+                break;
             default:
             case CMD_unknow:
                 break;
         }
-        uwRet = LOS_TaskDelay(1000);
+        uwRet = LOS_TaskDelay(500);
     }
 }
 

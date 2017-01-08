@@ -9,6 +9,9 @@ static Buffer_t sServerBuf = {{0},0};
 //client id
 static u8 deviceID[]="hdu123";
 
+//timer minutes
+static u8 sTimerMinutes = 0;
+
 //sensor info
 static Sensor_Info_t sSensorInfo;
 static u8 sSensorInfoOK = 0;
@@ -16,6 +19,7 @@ static u8 sSensorInfoOK = 0;
 //client-server interaction command
 static u8 OpenCmd[]="open";static const u8 OpenCmdLength = 4;
 static u8 CloseCmd[]="close";static const u8 CloseCmdLength = 5;
+static u8 TimerCmd[]="timer";static const u8 TimerCmdLength = 5;
 static u8 ComResponse[]="%%%";static const u8 ComResLength = 3;
 
 
@@ -73,6 +77,26 @@ Sensor_Info_t* getSensorInfo(void){
     return &sSensorInfo;
 }
 
+//when Timer cmd,get the mintues
+u8 getTimerMinutes(void){
+    u8 result;
+    result = sTimerMinutes;
+    sTimerMinutes = 0;
+    return result;
+}
+
+//it shoul be call by getServerMsg,when "timer" cmd,set sTimerMinutes
+static void getMinutesFromMsg(void){
+    u8* buf = getServerBuf();
+    if(TimerCmdLength+1 == ServerBuf_dataLength()){
+        sTimerMinutes = buf[TimerCmdLength]-'0';
+    }
+    else if(TimerCmdLength+2 == ServerBuf_dataLength()){
+        sTimerMinutes = (buf[TimerCmdLength]-'0')*10;
+        sTimerMinutes += (buf[TimerCmdLength+1]-'0');
+    }
+}
+
 /*******client-server bussiness*******/
 ServerMsg_t getServerMsg(void){
     ServerMsg_t MsgType = CMD_unknow;
@@ -80,6 +104,11 @@ ServerMsg_t getServerMsg(void){
         case OpenCmdLength:
             if(byteCompare(getServerBuf(),OpenCmd,OpenCmdLength))
                 MsgType = CMD_open;
+            else if(byteCompare(getServerBuf(),TimerCmd,TimerCmdLength)){
+                MsgType = CMD_timer;//set msg timer
+                //get Minutes
+                getMinutesFromMsg();
+            }
             ServerBuffer_clear();
             break;
         case CloseCmdLength:
@@ -96,6 +125,7 @@ ServerMsg_t getServerMsg(void){
     }
     return MsgType;
 }
+
 
 
 static void sendSensorInfo(Sensor_Info_t*sensorInfo){
